@@ -1,8 +1,34 @@
 export type WorkStatus = 'PROGRESS' | 'SELESAI' | 'REVISI PROGRESS' | 'REVISI SELESAI'
 
 export const WORK_STATUSES: WorkStatus[] = [
-    'PROGRESS',
-    'SELESAI',
-    'REVISI PROGRESS',
-    'REVISI SELESAI',
+  'PROGRESS',
+  'SELESAI',
+  'REVISI PROGRESS',
+  'REVISI SELESAI',
 ]
+
+export interface Work {
+  id: string
+  rNumber: string
+  customer: string
+  status: WorkStatus
+  notes: string
+  workDate: string // YYYY-MM-DD
+  createdAt: string // ISO
+  updatedAt: string // ISO
+}
+
+export interface Profile {
+  id: string
+  name: string
+  division: string
+  position: string
+}
+
+export interface DailyReport {
+  id: string
+  reportDate: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}

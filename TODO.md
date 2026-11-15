@@ -44,33 +44,33 @@
 ## Day 2 — Work Management
 
 ### Data Layer
-- [ ] Define Work interface
-- [ ] Define WorkStatus type
-- [ ] Setup Dexie database
-- [ ] Create works table
-- [ ] Create work repository
-- [ ] Create Pinia work store
+- [x] Define Work interface
+- [x] Define WorkStatus type
+- [x] Setup Dexie database
+- [x] Create works table
+- [x] Create work repository
+- [x] Create Pinia work store
 
 ### Work CRUD
-- [ ] Create Add Work form
-- [ ] Input R# number
-- [ ] Input customer name
-- [ ] Select work status
-- [ ] Select work date
-- [ ] Add work notes
-- [ ] Implement create work
-- [ ] Implement edit work
-- [ ] Implement delete work
-- [ ] Implement work detail modal
-- [ ] Add form validation
-- [ ] Add confirmation dialog for delete
+- [x] Create Add Work form
+- [x] Input R# number
+- [x] Input customer name
+- [x] Select work status
+- [x] Select work date
+- [x] Add work notes
+- [x] Implement create work
+- [x] Implement edit work
+- [x] Implement delete work
+- [x] Implement work detail modal
+- [x] Add form validation
+- [x] Add confirmation dialog for delete
 
 ### Work Notes
-- [ ] Add notes field to work detail
-- [ ] Implement notes editing
-- [ ] Persist notes to IndexedDB
-- [ ] Show notes indicator on work card
-- [ ] Ensure notes are internal only
+- [x] Add notes field to work detail
+- [x] Implement notes editing
+- [x] Persist notes to IndexedDB
+- [x] Show notes indicator on work card
+- [x] Ensure notes are internal only
 
 ---
 
