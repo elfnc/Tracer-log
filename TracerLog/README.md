@@ -1,5 +1,19 @@
-# Vue 3 + TypeScript + Vite
+# TracerLog
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+> **Personal Worklog & WhatsApp Daily Report Generator for Design Tracers**
+>
+> Modern, minimal, and local-first productivity tool to manage daily graphic design / tracing jobs and generate one-click copyable WhatsApp daily reports matching company standards.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Please refer to the main repository [README.md](../README.md) for full project documentation, architectural overview, and daily workflow guides.
+
+### Quick Scripts
+```bash
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Lint code
+pnpm lint
+```
