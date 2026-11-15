@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+/* dark mode pakai class `.dark` di <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light theme (default variable) */
+:root {
+    --app: #f5f7f6;
+    --panel: #ffffff;
+    --line: #e2e8e4;
+    --ink: #0f1a14;
+    --muted: #6b7a71;
+}
+
+/* Dark theme */
+.dark {
+    --app: #0b0f0d;
+    --panel: #121815;
+    --line: #1f2a24;
+    --ink: #e8efe9;
+    --muted: #8a9a8f;
+}
+
+@theme inline {
+    --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+    --color-app: var(--app);
+    --color-panel: var(--panel);
+    --color-line: var(--line);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+
+    --color-brand-400: #4ade80;
+    --color-brand-500: #22c55e;
+    --color-brand-600: #16a34a;
+}
+
+body {
+    @apply bg-app font-sans text-ink antialiased;
+}
