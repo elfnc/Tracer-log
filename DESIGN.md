@@ -52,37 +52,34 @@ Komponen, spacing, warna, typography, dan interaction pattern harus konsisten di
 
 ## **2. Color System**
 
-Primary
+Palette Reference: [Colorhunt #071B2B #167D8D #B9E4E8 #EEEEEE](https://colorhunt.co/palette/071b2b167d8db9e4e8eeeeee)
 
-\#477A5B
+Primary
+#167D8D
 
 Primary Hover
+#11626F
 
-\#386448
+Accent / Soft Highlight
+#B9E4E8
 
-App Background
+App Background (Light)
+#EEEEEE
 
-\#F7F8F7
+Surface (Light)
+#FFFFFF
 
-Surface
+Border (Light)
+#DCE5E8
 
-\#FFFFFF
+Text Primary (Light)
+#071B2B
 
-Border
+Text Secondary (Light)
+#3D5A70
 
-\#E5E7EB
-
-Text Primary
-
-\#202522
-
-Text Secondary
-
-\#69716B
-
-Text Muted
-
-\#929A94
+Text Muted (Light)
+#6B889C
 
 ### **Status Colors**
 
@@ -97,17 +94,16 @@ Status badge gunakan soft background dengan teks yang cukup kontras. Jangan guna
 
 ### **Dark Mode**
 
-Dark mode tetap didukung, tetapi light mode menjadi default.
-
 | Token            | Dark      |
 | ---------------- | --------- |
-| Background       | `#171A18` |
-| Surface          | `#202421` |
-| Surface Elevated | `#282D29` |
-| Border           | `#343A35` |
-| Text Primary     | `#E7ECE8` |
-| Text Secondary   | `#A0AAA2` |
-| Primary          | `#83B593` |
+| Background       | `#071B2B` |
+| Surface          | `#0D253A` |
+| Surface Elevated | `#14334C` |
+| Border           | `#1B3F60` |
+| Text Primary     | `#EEEEEE` |
+| Text Secondary   | `#B9E4E8` |
+| Primary          | `#167D8D` |
+| Accent           | `#B9E4E8` |
 
 ## **3. Typography**
 

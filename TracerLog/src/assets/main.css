@@ -3,34 +3,36 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme (default) */
+/* Light theme */
 :root {
-  --app: #F7F8F7;
+  --app: #EEEEEE;
   --panel: #FFFFFF;
-  --panel-elevated: #FFFFFF;
-  --line: #E5E7EB;
-  --ink: #202522;
-  --ink-secondary: #69716B;
-  --muted: #929A94;
+  --panel-elevated: #F8FAFB;
+  --line: #DCE5E8;
+  --ink: #071B2B;
+  --ink-secondary: #3D5A70;
+  --muted: #6B889C;
 
-  --primary: #477A5B;
-  --primary-hover: #386448;
-  --primary-light: rgba(71, 122, 91, 0.12);
+  --primary: #167D8D;
+  --primary-hover: #11626F;
+  --primary-light: rgba(22, 125, 141, 0.12);
+  --accent: #B9E4E8;
 }
 
 /* Dark theme */
 .dark {
-  --app: #171A18;
-  --panel: #202421;
-  --panel-elevated: #282D29;
-  --line: #343A35;
-  --ink: #E7ECE8;
-  --ink-secondary: #A0AAA2;
-  --muted: #838F86;
+  --app: #071B2B;
+  --panel: #0D253A;
+  --panel-elevated: #14334C;
+  --line: #1B3F60;
+  --ink: #EEEEEE;
+  --ink-secondary: #B9E4E8;
+  --muted: #789DB5;
 
-  --primary: #83B593;
-  --primary-hover: #97C4A5;
-  --primary-light: rgba(131, 181, 147, 0.15);
+  --primary: #167D8D;
+  --primary-hover: #219BB0;
+  --primary-light: rgba(22, 125, 141, 0.28);
+  --accent: #B9E4E8;
 }
 
 @theme inline {
@@ -47,6 +49,7 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
 }
 
 body {
