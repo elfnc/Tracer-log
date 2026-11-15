@@ -17,7 +17,7 @@ const props = withDefaults(
   }>(),
   {
     initialData: undefined,
-    submitLabel: 'Save Work',
+    submitLabel: 'Simpan Pekerjaan',
     isSubmitting: false,
   },
 )
@@ -110,7 +110,7 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseInput
         v-model="form.rNumber"
-        label="R# (Work Number)"
+        label="Nomor Pekerjaan (R#)"
         placeholder="Contoh: 2610240"
         :error="errors.rNumber"
         required
@@ -118,7 +118,7 @@ function handleSubmit() {
 
       <BaseInput
         v-model="form.customer"
-        label="Customer"
+        label="Nama Pelanggan (Customer)"
         placeholder="Contoh: GIS"
         :error="errors.customer"
         required
@@ -128,14 +128,14 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseSelect
         v-model="form.status"
-        label="Work Status"
+        label="Status Pengerjaan"
         :options="WORK_STATUSES"
         required
       />
 
       <BaseInput
         v-model="form.workDate"
-        label="Work Date"
+        label="Tanggal Pekerjaan"
         type="date"
         :error="errors.workDate"
         required
@@ -144,7 +144,7 @@ function handleSubmit() {
 
     <BaseTextarea
       v-model="form.notes"
-      label="Internal Notes"
+      label="Catatan Internal (Opsional)"
       placeholder="Catatan nomor area SO, instruksi cetak, detail revisi, dll..."
       hint="Internal only — aman dan tidak akan dikirim ke laporan WhatsApp"
       :rows="4"
@@ -152,10 +152,10 @@ function handleSubmit() {
 
     <div class="flex items-center justify-end gap-2 pt-2">
       <BaseButton type="button" variant="ghost" @click="emit('cancel')">
-        Cancel
+        Batal
       </BaseButton>
       <BaseButton type="submit" variant="primary" :disabled="isSubmitting">
-        {{ isSubmitting ? 'Saving...' : submitLabel }}
+        {{ isSubmitting ? 'Menyimpan...' : submitLabel }}
       </BaseButton>
     </div>
   </form>

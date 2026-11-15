@@ -84,7 +84,7 @@ function formatDateLabel(dateStr: string) {
 
 <template>
   <div class="space-y-5">
-    <!-- Page Header -->
+    <!-- Page Header (Title: Kanban Board in English, Subtitle in Indonesian) -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Kanban Board</h1>
@@ -96,7 +96,7 @@ function formatDateLabel(dateStr: string) {
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="openAddModal('PROGRESS')">
           <Plus class="size-4 mr-1.5" />
-          Add Work
+          Tambah Pekerjaan
         </BaseButton>
       </div>
     </div>
@@ -125,7 +125,7 @@ function formatDateLabel(dateStr: string) {
 
       <!-- Date Filters -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Preset: Today -->
+        <!-- Preset: Hari Ini -->
         <button
           type="button"
           class="rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer"
@@ -136,10 +136,10 @@ function formatDateLabel(dateStr: string) {
           "
           @click="setTodayFilter"
         >
-          Today
+          Hari Ini
         </button>
 
-        <!-- Preset: All Dates -->
+        <!-- Preset: Semua Tanggal -->
         <button
           type="button"
           class="rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer"
@@ -150,7 +150,7 @@ function formatDateLabel(dateStr: string) {
           "
           @click="setAllDatesFilter"
         >
-          All Dates
+          Semua Tanggal
         </button>
 
         <!-- Custom Date Input -->
@@ -187,7 +187,7 @@ function formatDateLabel(dateStr: string) {
           • Hasil pencarian "{{ workStore.searchQuery }}"
         </span>
       </div>
-      <span>Total: <strong class="text-ink">{{ workStore.filteredWorks.length }}</strong> works</span>
+      <span>Total: <strong class="text-ink">{{ workStore.filteredWorks.length }}</strong> pekerjaan</span>
     </div>
 
     <!-- Kanban Columns Grid -->
@@ -203,11 +203,11 @@ function formatDateLabel(dateStr: string) {
       />
     </div>
 
-    <!-- Modal Add Work -->
-    <BaseModal v-model="isAddModalOpen" title="Add Work">
+    <!-- Modal Tambah Pekerjaan -->
+    <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
       <WorkForm
         :initial-data="{ status: defaultStatusForAdd, workDate: workStore.selectedDate || workStore.todayStr }"
-        submit-label="Add to Board"
+        submit-label="Tambah ke Papan"
         @submit="handleCreateWork"
         @cancel="isAddModalOpen = false"
       />

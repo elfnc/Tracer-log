@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import {
   ClipboardList,
   Columns3,
@@ -8,10 +9,17 @@ import {
   Moon,
   Settings,
   Sun,
+  User,
 } from '@lucide/vue'
 import { useTheme } from '@/composables/useTheme'
+import { useProfileStore } from '@/stores/profileStore'
 
 const { isDark, toggle } = useTheme()
+const profileStore = useProfileStore()
+
+onMounted(async () => {
+  await profileStore.fetchProfile()
+})
 
 const nav = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -24,6 +32,7 @@ const nav = [
 
 <template>
   <aside class="flex w-16 shrink-0 flex-col border-r border-line bg-panel md:w-60">
+    <!-- Logo & Brand Header -->
     <div class="flex h-16 items-center gap-2.5 px-4">
       <div class="flex size-8 items-center justify-center rounded-[6px] bg-primary text-white shadow-xs">
         <ClipboardList class="size-4.5" />
@@ -34,6 +43,7 @@ const nav = [
       </div>
     </div>
 
+    <!-- Navigation Menu (Titles in English per rule) -->
     <nav class="flex-1 space-y-1 px-2.5 py-3">
       <RouterLink
         v-for="item in nav"
@@ -47,7 +57,28 @@ const nav = [
       </RouterLink>
     </nav>
 
-    <div class="border-t border-line p-2.5">
+    <!-- Bottom Section: Profile Preview & Theme Toggle -->
+    <div class="border-t border-line p-2.5 space-y-1.5">
+      <!-- User Profile Pill -->
+      <RouterLink
+        to="/settings"
+        title="Lihat pengaturan profil"
+        class="hidden md:flex items-center gap-2.5 rounded-[6px] px-2.5 py-2 transition-colors hover:bg-primary-light/50 cursor-pointer"
+      >
+        <div class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary font-bold text-xs">
+          <User class="size-3.5" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-xs font-semibold text-ink leading-tight">
+            {{ profileStore.profile.name || 'Profil Karyawan' }}
+          </p>
+          <p class="truncate text-[10px] text-muted leading-tight">
+            {{ profileStore.profile.position || 'Designer' }}
+          </p>
+        </div>
+      </RouterLink>
+
+      <!-- Theme Switch Button -->
       <button
         type="button"
         class="flex w-full items-center gap-3 rounded-[6px] px-3 py-2 text-sm font-medium text-ink-secondary transition-colors duration-150 hover:bg-primary-light hover:text-ink cursor-pointer"

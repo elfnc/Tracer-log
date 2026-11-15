@@ -21,7 +21,7 @@ const emit = defineEmits<{
     <!-- Header Preview Card -->
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-app/50 px-4 py-3">
       <div class="flex items-center gap-2">
-        <span class="text-xs font-semibold uppercase tracking-wider text-ink">Preview WhatsApp</span>
+        <span class="text-xs font-semibold uppercase tracking-wider text-ink">Pratinjau WhatsApp</span>
         <span class="inline-flex items-center justify-center rounded-full bg-primary-light px-2 py-0.5 text-[11px] font-medium text-primary">
           {{ workCount }} pekerjaan
         </span>
@@ -35,7 +35,7 @@ const emit = defineEmits<{
           @click="emit('regenerate')"
         >
           <RefreshCw class="size-3.5" />
-          <span>Regenerate</span>
+          <span>Perbarui Format</span>
         </button>
 
         <button
@@ -45,7 +45,7 @@ const emit = defineEmits<{
           @click="emit('save')"
         >
           <BookmarkCheck class="size-3.5" :class="isSaved ? 'text-primary' : ''" />
-          <span>{{ isSaved ? 'Saved' : 'Save Report' }}</span>
+          <span>{{ isSaved ? 'Tersimpan' : 'Simpan Laporan' }}</span>
         </button>
       </div>
     </div>
@@ -70,7 +70,7 @@ const emit = defineEmits<{
         @click="emit('copy')"
       >
         <component :is="isCopied ? Check : Copy" class="size-4 mr-1.5" />
-        <span>{{ isCopied ? 'Copied to Clipboard!' : 'Copy Report' }}</span>
+        <span>{{ isCopied ? 'Berhasil Disalin!' : 'Salin Laporan' }}</span>
       </BaseButton>
     </div>
   </div>

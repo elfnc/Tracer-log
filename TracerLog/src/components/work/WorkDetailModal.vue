@@ -118,9 +118,9 @@ function formatDate(isoString?: string) {
 </script>
 
 <template>
-  <BaseModal v-model="open" :title="`Work Detail — R# ${work?.rNumber ?? ''}`">
+  <BaseModal v-model="open" :title="`Detail Pekerjaan — R# ${work?.rNumber ?? ''}`">
     <div v-if="work" class="space-y-4">
-      <!-- Delete Confirmation Alert -->
+      <!-- Konfirmasi Hapus Dialog -->
       <div
         v-if="isConfirmingDelete"
         class="rounded-[8px] border border-red-300/60 bg-red-50/70 p-4 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
@@ -136,10 +136,10 @@ function formatDate(isoString?: string) {
             </p>
             <div class="flex items-center gap-2 pt-2">
               <BaseButton size="sm" variant="danger" @click="handleDelete">
-                Yes, Delete Now
+                Ya, Hapus Sekarang
               </BaseButton>
               <BaseButton size="sm" variant="ghost" @click="isConfirmingDelete = false">
-                Cancel
+                Batal
               </BaseButton>
             </div>
           </div>
@@ -151,7 +151,7 @@ function formatDate(isoString?: string) {
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseInput
             v-model="form.rNumber"
-            label="R# (Work Number)"
+            label="Nomor Pekerjaan (R#)"
             placeholder="Contoh: 2610240"
             :error="errors.rNumber"
             required
@@ -159,7 +159,7 @@ function formatDate(isoString?: string) {
 
           <BaseInput
             v-model="form.customer"
-            label="Customer"
+            label="Nama Pelanggan (Customer)"
             placeholder="Contoh: GIS"
             :error="errors.customer"
             required
@@ -169,14 +169,14 @@ function formatDate(isoString?: string) {
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseSelect
             v-model="form.status"
-            label="Work Status"
+            label="Status Pengerjaan"
             :options="WORK_STATUSES"
             required
           />
 
           <BaseInput
             v-model="form.workDate"
-            label="Work Date"
+            label="Tanggal Pekerjaan"
             type="date"
             :error="errors.workDate"
             required
@@ -185,7 +185,7 @@ function formatDate(isoString?: string) {
 
         <BaseTextarea
           v-model="form.notes"
-          label="Internal Notes"
+          label="Catatan Internal"
           placeholder="Catatan nomor area SO, instruksi cetak, atau detail revisi..."
           hint="Internal only — aman dan tidak akan dikirim ke laporan WhatsApp"
           :rows="4"
@@ -195,10 +195,10 @@ function formatDate(isoString?: string) {
         <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 text-[11px] text-muted border-t border-line/60">
           <div class="flex items-center gap-1.5">
             <Clock class="size-3" />
-            <span>Created: {{ formatDate(work.createdAt) }}</span>
+            <span>Dibuat: {{ formatDate(work.createdAt) }}</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <span>Updated: {{ formatDate(work.updatedAt) }}</span>
+            <span>Diperbarui: {{ formatDate(work.updatedAt) }}</span>
           </div>
         </div>
       </div>
@@ -214,13 +214,13 @@ function formatDate(isoString?: string) {
           @click="isConfirmingDelete = true"
         >
           <Trash2 class="size-4 mr-1.5" />
-          Delete Work
+          Hapus Pekerjaan
         </BaseButton>
         <div v-else />
 
         <div class="flex items-center gap-2">
           <BaseButton type="button" variant="ghost" @click="open = false">
-            Close
+            Tutup
           </BaseButton>
           <BaseButton
             v-if="!isConfirmingDelete"
@@ -229,7 +229,7 @@ function formatDate(isoString?: string) {
             :disabled="isSaving"
             @click="handleSave"
           >
-            {{ isSaving ? 'Saving...' : 'Save Changes' }}
+            {{ isSaving ? 'Menyimpan...' : 'Simpan Perubahan' }}
           </BaseButton>
         </div>
       </div>

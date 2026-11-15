@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { Plus, ArrowRight, FileText, CheckCircle2, Clock3, AlertCircle, Layers } from '@lucide/vue'
+import { Plus, ArrowRight, FileText, CheckCircle2, Clock3, AlertCircle, Layers, Calendar } from '@lucide/vue'
 import { useRouter } from 'vue-router'
 import { format, parseISO } from 'date-fns'
 import { id } from 'date-fns/locale'
@@ -19,6 +19,8 @@ const workStore = useWorkStore()
 const isAddModalOpen = ref(false)
 const isDetailModalOpen = ref(false)
 const activeWork = ref<Work | null>(null)
+
+const todayFormatted = format(new Date(), 'EEEE, d MMMM yyyy', { locale: id })
 
 onMounted(async () => {
   await workStore.fetchWorks()
@@ -53,17 +55,25 @@ function formatDisplayDate(dateStr: string) {
 
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
+    <!-- Page Header (Title: Dashboard in English, Subtitle in Indonesian) -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dashboard</h1>
-        <p class="text-xs text-ink-secondary md:text-sm">Ringkasan aktivitas pekerjaan dan pelaporan harian Anda</p>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dashboard</h1>
+          <div class="flex items-center gap-1.5 rounded-full bg-primary-light/60 px-2.5 py-0.5 text-[11px] font-medium text-primary">
+            <Calendar class="size-3" />
+            <span>{{ todayFormatted }}</span>
+          </div>
+        </div>
+        <p class="mt-0.5 text-xs text-ink-secondary md:text-sm">
+          Ringkasan aktivitas pekerjaan dan pelaporan hari ini
+        </p>
       </div>
 
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="isAddModalOpen = true">
           <Plus class="size-4 mr-1.5" />
-          Add Work
+          Tambah Pekerjaan
         </BaseButton>
       </div>
     </div>
@@ -72,7 +82,7 @@ function formatDisplayDate(dateStr: string) {
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-muted">
-          <span class="text-xs font-medium text-ink-secondary">Total Today</span>
+          <span class="text-xs font-medium text-ink-secondary">Total Hari Ini</span>
           <Layers class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -82,7 +92,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
-          <span class="text-xs font-medium text-ink-secondary">Completed</span>
+          <span class="text-xs font-medium text-ink-secondary">Selesai</span>
           <CheckCircle2 class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -92,7 +102,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-amber-600 dark:text-amber-400">
-          <span class="text-xs font-medium text-ink-secondary">In Progress</span>
+          <span class="text-xs font-medium text-ink-secondary">Dalam Proses</span>
           <Clock3 class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -102,7 +112,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-rose-600 dark:text-rose-400">
-          <span class="text-xs font-medium text-ink-secondary">Revision</span>
+          <span class="text-xs font-medium text-ink-secondary">Revisi</span>
           <AlertCircle class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -117,7 +127,7 @@ function formatDisplayDate(dateStr: string) {
       <div class="rounded-[8px] border border-line bg-panel p-5 shadow-xs lg:col-span-2">
         <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
-            <h2 class="text-sm font-semibold text-ink">Recent Work</h2>
+            <h2 class="text-sm font-semibold text-ink">Pekerjaan Terbaru</h2>
             <p class="text-xs text-muted">Pekerjaan yang baru saja Anda catat</p>
           </div>
           <button
@@ -125,7 +135,7 @@ function formatDisplayDate(dateStr: string) {
             class="flex items-center gap-1 text-xs font-medium text-primary hover:underline cursor-pointer"
             @click="router.push('/kanban')"
           >
-            Kanban Board
+            Buka Papan Kanban
             <ArrowRight class="size-3.5" />
           </button>
         </div>
@@ -141,7 +151,7 @@ function formatDisplayDate(dateStr: string) {
           <p class="text-sm font-medium text-ink">Belum ada pekerjaan yang dicatat</p>
           <p class="mt-0.5 text-xs text-muted">Mulai catat pekerjaan pertama Anda hari ini agar tertata rapi!</p>
           <BaseButton size="sm" variant="primary" class="mt-3.5" @click="isAddModalOpen = true">
-            Add Work
+            Tambah Pekerjaan Baru
           </BaseButton>
         </div>
 
@@ -183,7 +193,7 @@ function formatDisplayDate(dateStr: string) {
             <FileText class="size-5" />
           </div>
           <div>
-            <h2 class="text-sm font-semibold text-ink">Daily Report</h2>
+            <h2 class="text-sm font-semibold text-ink">Laporan Harian</h2>
             <p class="mt-1 text-xs text-ink-secondary leading-relaxed">
               Buat rekap format laporan harian siap salin ke WhatsApp grup kantor secara otomatis.
             </p>
@@ -202,17 +212,17 @@ function formatDisplayDate(dateStr: string) {
             class="w-full justify-between"
             @click="router.push('/report')"
           >
-            <span>Open Daily Report</span>
+            <span>Buka Laporan Harian</span>
             <ArrowRight class="size-4" />
           </BaseButton>
         </div>
       </div>
     </div>
 
-    <!-- Modal Add Work -->
-    <BaseModal v-model="isAddModalOpen" title="Add Work">
+    <!-- Modal Tambah Pekerjaan -->
+    <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
       <WorkForm
-        submit-label="Save Work"
+        submit-label="Tambah Pekerjaan"
         @submit="handleCreateWork"
         @cancel="isAddModalOpen = false"
       />

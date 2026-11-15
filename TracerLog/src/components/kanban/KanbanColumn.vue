@@ -137,7 +137,7 @@ function onDrop(e: DragEvent) {
         @click="emit('quickAdd', status)"
       >
         <Plus class="size-3.5" />
-        <span>Add Work</span>
+        <span>Tambah Pekerjaan</span>
       </button>
     </div>
   </div>

@@ -167,7 +167,7 @@ async function copyFromHistory(report: DailyReport) {
       </Transition>
     </Teleport>
 
-    <!-- Page Header -->
+    <!-- Page Header (Title: Daily Report in English, Subtitle in Indonesian) -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Daily Report</h1>
@@ -179,7 +179,7 @@ async function copyFromHistory(report: DailyReport) {
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="handleCopy">
           <Copy class="size-4 mr-1.5" />
-          Copy Report
+          Salin Laporan
         </BaseButton>
       </div>
     </div>
@@ -188,7 +188,7 @@ async function copyFromHistory(report: DailyReport) {
     <div class="rounded-[8px] border border-line bg-panel p-4 shadow-2xs">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="space-y-1">
-          <label class="block text-xs font-medium text-ink-secondary">Report Date</label>
+          <label class="block text-xs font-medium text-ink-secondary">Tanggal Laporan</label>
           <div class="flex flex-wrap items-center gap-2">
             <div class="relative flex items-center">
               <Calendar class="pointer-events-none absolute left-3 size-4 text-muted" />
@@ -209,7 +209,7 @@ async function copyFromHistory(report: DailyReport) {
               "
               @click="setToday"
             >
-              Today
+              Hari Ini
             </button>
 
             <button
@@ -217,7 +217,7 @@ async function copyFromHistory(report: DailyReport) {
               class="rounded-[6px] border border-line bg-app px-3 py-1.5 text-xs font-medium text-ink-secondary hover:bg-primary-light hover:text-ink transition-colors cursor-pointer"
               @click="setYesterday"
             >
-              Yesterday
+              Kemarin
             </button>
           </div>
         </div>
@@ -274,7 +274,7 @@ async function copyFromHistory(report: DailyReport) {
 
             <BaseButton size="sm" variant="secondary" @click="isAddModalOpen = true">
               <Plus class="size-3.5 mr-1" />
-              Add Work
+              Tambah Pekerjaan
             </BaseButton>
           </div>
 
@@ -291,7 +291,7 @@ async function copyFromHistory(report: DailyReport) {
               Tambahkan pekerjaan terlebih dahulu agar format rekap terisi.
             </p>
             <BaseButton size="sm" variant="primary" class="mt-3" @click="isAddModalOpen = true">
-              Add Work
+              Tambah Pekerjaan
             </BaseButton>
           </div>
 
@@ -331,7 +331,7 @@ async function copyFromHistory(report: DailyReport) {
             <div class="flex items-center gap-2">
               <History class="size-4 text-muted" />
               <h2 class="text-xs font-semibold uppercase tracking-wider text-ink">
-                Report History
+                Riwayat Laporan
               </h2>
             </div>
             <span class="text-[11px] text-muted">{{ reportStore.savedReports.length }} tersimpan</span>
@@ -382,11 +382,11 @@ async function copyFromHistory(report: DailyReport) {
       </div>
     </div>
 
-    <!-- Modal Add Work -->
-    <BaseModal v-model="isAddModalOpen" title="Add Work">
+    <!-- Modal Tambah Pekerjaan -->
+    <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
       <WorkForm
         :initial-data="{ workDate: selectedDate }"
-        submit-label="Save Work"
+        submit-label="Simpan Pekerjaan"
         @submit="handleCreateWork"
         @cancel="isAddModalOpen = false"
       />

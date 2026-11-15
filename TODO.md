@@ -146,35 +146,35 @@
 ## Day 5 — Dashboard & Profile
 
 ### Dashboard
-- [ ] Create dashboard layout
-- [ ] Display today's total work
-- [ ] Display completed work count
-- [ ] Display progress work count
-- [ ] Display revision work count
-- [ ] Display recent works
-- [ ] Add quick action to create work
-- [ ] Add shortcut to Daily Report
-- [ ] Add dashboard date display
+- [x] Create dashboard layout
+- [x] Display today's total work
+- [x] Display completed work count
+- [x] Display progress work count
+- [x] Display revision work count
+- [x] Display recent works
+- [x] Add quick action to create work
+- [x] Add shortcut to Daily Report
+- [x] Add dashboard date display
 
 ### Personal Profile
-- [ ] Define Profile interface
-- [ ] Setup profiles table in Dexie
-- [ ] Create profile store
-- [ ] Create profile settings form
-- [ ] Input employee name
-- [ ] Input division
-- [ ] Input position
-- [ ] Save profile
-- [ ] Load profile on app initialization
-- [ ] Update report header from profile
+- [x] Define Profile interface
+- [x] Setup profiles table in Dexie
+- [x] Create profile store
+- [x] Create profile settings form
+- [x] Input employee name
+- [x] Input division
+- [x] Input position
+- [x] Save profile
+- [x] Load profile on app initialization
+- [x] Update report header from profile
 
 ### UI Refinement
-- [ ] Refine dashboard spacing
-- [ ] Refine work card appearance
-- [ ] Refine modal appearance
-- [ ] Refine form validation feedback
-- [ ] Add responsive behavior for mobile
-- [ ] Check dark mode consistency
+- [x] Refine dashboard spacing
+- [x] Refine work card appearance
+- [x] Refine modal appearance
+- [x] Refine form validation feedback
+- [x] Add responsive behavior for mobile
+- [x] Check dark mode consistency
 
 ---
 
