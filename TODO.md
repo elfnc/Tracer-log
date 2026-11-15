@@ -77,27 +77,27 @@
 ## Day 3 — Kanban Board
 
 ### Kanban Layout
-- [ ] Create Kanban Board layout
-- [ ] Create PROGRESS column
-- [ ] Create SELESAI column
-- [ ] Create REVISI PROGRESS column
-- [ ] Create REVISI SELESAI column
-- [ ] Create Work Card component
-- [ ] Display R# on work card
-- [ ] Display customer on work card
-- [ ] Display notes indicator
-- [ ] Display work date
+- [x] Create Kanban Board layout
+- [x] Create PROGRESS column
+- [x] Create SELESAI column
+- [x] Create REVISI PROGRESS column
+- [x] Create REVISI SELESAI column
+- [x] Create Work Card component
+- [x] Display R# on work card
+- [x] Display customer on work card
+- [x] Display notes indicator
+- [x] Display work date
 
 ### Kanban Interaction
-- [ ] Implement drag and drop
-- [ ] Update work status when moved
-- [ ] Persist status changes
-- [ ] Click card to open work detail
-- [ ] Add search by R#
-- [ ] Add search by customer
-- [ ] Add date filter
-- [ ] Add empty state per column
-- [ ] Add loading / error state where applicable
+- [x] Implement drag and drop
+- [x] Update work status when moved
+- [x] Persist status changes
+- [x] Click card to open work detail
+- [x] Add search by R#
+- [x] Add search by customer
+- [x] Add date filter
+- [x] Add empty state per column
+- [x] Add loading / error state where applicable
 
 ---
 

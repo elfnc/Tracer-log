@@ -17,7 +17,7 @@ const props = withDefaults(
   }>(),
   {
     initialData: undefined,
-    submitLabel: 'Simpan',
+    submitLabel: 'Simpan Pekerjaan',
     isSubmitting: false,
   },
 )
@@ -80,12 +80,12 @@ function validate(): boolean {
   }
 
   if (!form.customer.trim()) {
-    errors.customer = 'Nama customer wajib diisi'
+    errors.customer = 'Nama pelanggan wajib diisi'
     valid = false
   }
 
   if (!form.workDate) {
-    errors.workDate = 'Tanggal pekerjaan wajib dipilih'
+    errors.workDate = 'Tanggal pekerjaan harus dipilih'
     valid = false
   }
 
@@ -110,16 +110,16 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseInput
         v-model="form.rNumber"
-        label="R# (Nomor Pekerjaan)"
-        placeholder="Contoh: 2610240"
+        label="Nomor Pekerjaan (R#)"
+        placeholder="Misal: 2610240"
         :error="errors.rNumber"
         required
       />
 
       <BaseInput
         v-model="form.customer"
-        label="Customer"
-        placeholder="Contoh: GIS"
+        label="Nama Pelanggan (Customer)"
+        placeholder="Misal: GIS"
         :error="errors.customer"
         required
       />
@@ -128,7 +128,7 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseSelect
         v-model="form.status"
-        label="Status Pekerjaan"
+        label="Status Pengerjaan"
         :options="WORK_STATUSES"
         required
       />
@@ -144,9 +144,9 @@ function handleSubmit() {
 
     <BaseTextarea
       v-model="form.notes"
-      label="Catatan Internal"
-      placeholder="Catatan nomor area, SO, spesifikasi desain, dsb..."
-      hint="Internal only — tidak masuk laporan WhatsApp"
+      label="Catatan Internal (Opsional)"
+      placeholder="Tulis catatan penting seperti nomor area SO, instruksi cetak, detail revisi, dll..."
+      hint="Internal — aman dan tidak akan dikirim ke laporan WhatsApp"
       :rows="4"
     />
 

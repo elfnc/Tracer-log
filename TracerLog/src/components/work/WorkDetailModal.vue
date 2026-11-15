@@ -2,6 +2,7 @@
 import { ref, watch, reactive } from 'vue'
 import { Trash2, AlertTriangle, Clock } from '@lucide/vue'
 import { format } from 'date-fns'
+import { id } from 'date-fns/locale'
 import type { Work, WorkStatus } from '@/types'
 import { WORK_STATUSES } from '@/types'
 import BaseModal from '@/components/ui/BaseModal.vue'
@@ -71,12 +72,12 @@ function validate(): boolean {
   }
 
   if (!form.customer.trim()) {
-    errors.customer = 'Nama customer wajib diisi'
+    errors.customer = 'Nama pelanggan wajib diisi'
     valid = false
   }
 
   if (!form.workDate) {
-    errors.workDate = 'Tanggal pekerjaan wajib dipilih'
+    errors.workDate = 'Tanggal pekerjaan harus dipilih'
     valid = false
   }
 
@@ -109,7 +110,7 @@ function handleDelete() {
 function formatDate(isoString?: string) {
   if (!isoString) return '-'
   try {
-    return format(new Date(isoString), 'dd/MM/yyyy HH:mm')
+    return format(new Date(isoString), 'd MMM yyyy, HH:mm', { locale: id })
   } catch {
     return isoString
   }
@@ -119,21 +120,23 @@ function formatDate(isoString?: string) {
 <template>
   <BaseModal v-model="open" :title="`Detail Pekerjaan — R# ${work?.rNumber ?? ''}`">
     <div v-if="work" class="space-y-4">
-      <!-- Delete confirmation alert -->
+      <!-- Konfirmasi Hapus Dialog -->
       <div
         v-if="isConfirmingDelete"
-        class="rounded-[8px] border border-red-300/60 bg-red-50/70 p-3.5 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
+        class="rounded-[8px] border border-red-300/60 bg-red-50/70 p-4 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
       >
-        <div class="flex items-start gap-2.5">
-          <AlertTriangle class="size-4 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
-          <div class="flex-1 space-y-1">
-            <p class="font-semibold">Hapus pekerjaan R# {{ work.rNumber }}?</p>
-            <p class="text-muted dark:text-red-300/80">
-              Tindakan ini tidak dapat dibatalkan. Data pekerjaan dan catatan internal akan dihapus permanen.
+        <div class="flex items-start gap-3">
+          <AlertTriangle class="size-4.5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
+          <div class="flex-1 space-y-1.5">
+            <p class="text-sm font-semibold text-red-900 dark:text-red-200">
+              Hapus pekerjaan R# {{ work.rNumber }}?
+            </p>
+            <p class="text-xs text-red-700/90 dark:text-red-300/80 leading-relaxed">
+              Pekerjaan ini serta seluruh catatan internalnya akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.
             </p>
             <div class="flex items-center gap-2 pt-2">
               <BaseButton size="sm" variant="danger" @click="handleDelete">
-                Ya, Hapus
+                Ya, Hapus Sekarang
               </BaseButton>
               <BaseButton size="sm" variant="ghost" @click="isConfirmingDelete = false">
                 Batal
@@ -143,21 +146,21 @@ function formatDate(isoString?: string) {
         </div>
       </div>
 
-      <!-- Main form -->
+      <!-- Form Detail & Edit -->
       <div v-if="!isConfirmingDelete" class="space-y-4">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseInput
             v-model="form.rNumber"
-            label="R# (Nomor Pekerjaan)"
-            placeholder="2610240"
+            label="Nomor Pekerjaan (R#)"
+            placeholder="Misal: 2610240"
             :error="errors.rNumber"
             required
           />
 
           <BaseInput
             v-model="form.customer"
-            label="Customer"
-            placeholder="GIS"
+            label="Nama Pelanggan (Customer)"
+            placeholder="Misal: GIS"
             :error="errors.customer"
             required
           />
@@ -166,7 +169,7 @@ function formatDate(isoString?: string) {
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseSelect
             v-model="form.status"
-            label="Status Pekerjaan"
+            label="Status Pengerjaan"
             :options="WORK_STATUSES"
             required
           />
@@ -183,18 +186,18 @@ function formatDate(isoString?: string) {
         <BaseTextarea
           v-model="form.notes"
           label="Catatan Internal"
-          placeholder="Area SO, detail revisi, instruksi cetak..."
-          hint="Internal only — tidak muncul di WhatsApp report"
+          placeholder="Tulis catatan area SO, instruksi cetak, atau detail revisi..."
+          hint="Internal — aman dan tidak akan dikirim ke laporan WhatsApp"
           :rows="4"
         />
 
-        <!-- Metadata footer -->
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-[11px] text-muted border-t border-line/60">
-          <div class="flex items-center gap-1">
+        <!-- Metadata Waktu -->
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 text-[11px] text-muted border-t border-line/60">
+          <div class="flex items-center gap-1.5">
             <Clock class="size-3" />
             <span>Dibuat: {{ formatDate(work.createdAt) }}</span>
           </div>
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-1.5">
             <span>Diperbarui: {{ formatDate(work.updatedAt) }}</span>
           </div>
         </div>
@@ -211,7 +214,7 @@ function formatDate(isoString?: string) {
           @click="isConfirmingDelete = true"
         >
           <Trash2 class="size-4 mr-1.5" />
-          Hapus
+          Hapus Pekerjaan
         </BaseButton>
         <div v-else />
 

@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { Plus, ArrowRight, FileText, CheckCircle2, Clock3, AlertCircle, Layers } from '@lucide/vue'
 import { useRouter } from 'vue-router'
+import { format, parseISO } from 'date-fns'
+import { id } from 'date-fns/locale'
 import { useWorkStore } from '@/stores/workStore'
 import type { Work } from '@/types'
 import type { CreateWorkDto } from '@/repositories/workRepository'
@@ -32,33 +34,41 @@ function openDetail(work: Work) {
   isDetailModalOpen.value = true
 }
 
-async function handleUpdateWork(id: string, data: Parameters<typeof workStore.updateWork>[1]) {
-  await workStore.updateWork(id, data)
+async function handleUpdateWork(workId: string, data: Parameters<typeof workStore.updateWork>[1]) {
+  await workStore.updateWork(workId, data)
 }
 
-async function handleDeleteWork(id: string) {
-  await workStore.deleteWork(id)
+async function handleDeleteWork(workId: string) {
+  await workStore.deleteWork(workId)
+}
+
+function formatDisplayDate(dateStr: string) {
+  try {
+    return format(parseISO(dateStr), 'd MMM yyyy', { locale: id })
+  } catch {
+    return dateStr
+  }
 }
 </script>
 
 <template>
   <div class="space-y-6">
-    <!-- Header -->
+    <!-- Header Halaman -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dashboard</h1>
-        <p class="text-xs text-ink-secondary md:text-sm">Ringkasan pekerjaan dan pelaporan hari ini</p>
+        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dasbor</h1>
+        <p class="text-xs text-ink-secondary md:text-sm">Ringkasan aktivitas pekerjaan dan pelaporan harian Anda</p>
       </div>
 
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="isAddModalOpen = true">
-          <Plus class="size-4 mr-1" />
-          Add Work
+          <Plus class="size-4 mr-1.5" />
+          Tambah Pekerjaan
         </BaseButton>
       </div>
     </div>
 
-    <!-- Stats Cards Grid -->
+    <!-- Kartu Statistik Hari Ini -->
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-muted">
@@ -82,7 +92,7 @@ async function handleDeleteWork(id: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-amber-600 dark:text-amber-400">
-          <span class="text-xs font-medium text-ink-secondary">Progress</span>
+          <span class="text-xs font-medium text-ink-secondary">Dalam Proses</span>
           <Clock3 class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -101,26 +111,26 @@ async function handleDeleteWork(id: string) {
       </div>
     </div>
 
-    <!-- Recent Work & Daily Report Quick Card -->
+    <!-- Pekerjaan Terbaru & Shortcut Laporan Harian -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-      <!-- Recent Work List (2 cols) -->
+      <!-- Daftar Pekerjaan Terbaru (2 Kolom) -->
       <div class="rounded-[8px] border border-line bg-panel p-5 shadow-xs lg:col-span-2">
         <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
-            <h2 class="text-sm font-semibold text-ink">Recent Work</h2>
-            <p class="text-xs text-muted">Pekerjaan terakhir yang ditambahkan</p>
+            <h2 class="text-sm font-semibold text-ink">Pekerjaan Terbaru</h2>
+            <p class="text-xs text-muted">Daftar pekerjaan yang baru saja Anda catat</p>
           </div>
           <button
             type="button"
             class="flex items-center gap-1 text-xs font-medium text-primary hover:underline cursor-pointer"
             @click="router.push('/kanban')"
           >
-            Kanban Board
+            Papan Kanban
             <ArrowRight class="size-3.5" />
           </button>
         </div>
 
-        <!-- Empty state -->
+        <!-- Empty state jika belum ada data -->
         <div
           v-if="workStore.works.length === 0"
           class="flex flex-col items-center justify-center py-10 text-center"
@@ -128,14 +138,14 @@ async function handleDeleteWork(id: string) {
           <div class="flex size-10 items-center justify-center rounded-full bg-primary-light text-primary mb-2">
             <Plus class="size-5" />
           </div>
-          <p class="text-sm font-medium text-ink">Belum ada pekerjaan tercatat</p>
-          <p class="mt-0.5 text-xs text-muted">Mulai dengan mencatat pekerjaan pertama Anda hari ini</p>
+          <p class="text-sm font-medium text-ink">Belum ada pekerjaan yang dicatat</p>
+          <p class="mt-0.5 text-xs text-muted">Mulai catat pekerjaan pertama Anda hari ini agar tertata rapi!</p>
           <BaseButton size="sm" variant="primary" class="mt-3.5" @click="isAddModalOpen = true">
-            Tambah Work
+            Tambah Pekerjaan Baru
           </BaseButton>
         </div>
 
-        <!-- Recent list -->
+        <!-- Daftar pekerjaan terbaru -->
         <div v-else class="divide-y divide-line/60 pt-1">
           <div
             v-for="work in workStore.recentWorks"
@@ -145,13 +155,13 @@ async function handleDeleteWork(id: string) {
             class="flex items-center justify-between py-3 transition-colors hover:bg-primary-light/40 px-2 rounded-[6px] cursor-pointer"
             @click="openDetail(work)"
           >
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5">
               <span class="text-sm font-semibold text-ink">R# {{ work.rNumber }}</span>
               <span class="text-xs text-muted">/</span>
               <span class="text-xs font-medium text-ink-secondary">{{ work.customer }}</span>
               <span
                 v-if="work.notes"
-                title="Memiliki catatan internal"
+                title="Tersedia catatan internal"
                 class="flex size-4.5 items-center justify-center rounded-[4px] bg-primary-light text-primary"
               >
                 <FileText class="size-2.5" />
@@ -159,29 +169,29 @@ async function handleDeleteWork(id: string) {
             </div>
 
             <div class="flex items-center gap-3">
-              <span class="hidden text-xs text-muted sm:inline">{{ work.workDate }}</span>
+              <span class="hidden text-xs text-muted sm:inline">{{ formatDisplayDate(work.workDate) }}</span>
               <WorkStatusBadge :status="work.status" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Daily Report Quick Card (1 col) -->
+      <!-- Kartu Cepat Laporan Harian (1 Kolom) -->
       <div class="flex flex-col justify-between rounded-[8px] border border-line bg-panel p-5 shadow-xs">
         <div class="space-y-3">
           <div class="flex size-9 items-center justify-center rounded-[6px] bg-primary-light text-primary">
             <FileText class="size-5" />
           </div>
           <div>
-            <h2 class="text-sm font-semibold text-ink">Daily Report</h2>
+            <h2 class="text-sm font-semibold text-ink">Laporan Harian</h2>
             <p class="mt-1 text-xs text-ink-secondary leading-relaxed">
-              Generate format laporan harian siap kirim ke WhatsApp grup kantor.
+              Buat rekap format laporan harian siap salin ke WhatsApp grup kantor secara otomatis.
             </p>
           </div>
           <div class="rounded-[6px] bg-app p-3 text-xs text-ink-secondary border border-line">
-            <span class="font-medium text-ink">Status Hari Ini:</span>
+            <span class="font-medium text-ink">Pekerjaan Hari Ini:</span>
             <p class="mt-1 text-muted">
-              {{ workStore.todayWorks.length }} pekerjaan siap dicatat pada laporan harian.
+              {{ workStore.todayWorks.length }} pekerjaan siap dimasukkan ke dalam format rekap.
             </p>
           </div>
         </div>
@@ -192,14 +202,14 @@ async function handleDeleteWork(id: string) {
             class="w-full justify-between"
             @click="router.push('/report')"
           >
-            <span>Buka Daily Report</span>
+            <span>Buka Laporan Harian</span>
             <ArrowRight class="size-4" />
           </BaseButton>
         </div>
       </div>
     </div>
 
-    <!-- Modal Add Work -->
+    <!-- Modal Tambah Pekerjaan -->
     <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
       <WorkForm
         submit-label="Tambah Pekerjaan"
@@ -208,7 +218,7 @@ async function handleDeleteWork(id: string) {
       />
     </BaseModal>
 
-    <!-- Modal Detail Work -->
+    <!-- Modal Detail & Edit Pekerjaan -->
     <WorkDetailModal
       v-model="isDetailModalOpen"
       :work="activeWork"
