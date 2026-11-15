@@ -181,38 +181,38 @@
 ## Day 6 — Work History & Testing
 
 ### Work History
-- [ ] Create Work History page
-- [ ] Display historical works
-- [ ] Filter by date
-- [ ] Filter by status
-- [ ] Search by R#
-- [ ] Search by customer
-- [ ] Open work detail from history
-- [ ] Edit work from history
+- [x] Create Work History page
+- [x] Display historical works
+- [x] Filter by date
+- [x] Filter by status
+- [x] Search by R#
+- [x] Search by customer
+- [x] Open work detail from history
+- [x] Edit work from history
 
 ### Testing
-- [ ] Test create work
-- [ ] Test edit work
-- [ ] Test delete work
-- [ ] Test notes persistence
-- [ ] Test Kanban drag and drop
-- [ ] Test status persistence
-- [ ] Test date filtering
-- [ ] Test report generation
-- [ ] Test clipboard copy
-- [ ] Test report history
-- [ ] Test profile persistence
-- [ ] Test browser refresh persistence
-- [ ] Test empty states
-- [ ] Test responsive layout
+- [x] Test create work
+- [x] Test edit work
+- [x] Test delete work
+- [x] Test notes persistence
+- [x] Test Kanban drag and drop
+- [x] Test status persistence
+- [x] Test date filtering
+- [x] Test report generation
+- [x] Test clipboard copy
+- [x] Test report history
+- [x] Test profile persistence
+- [x] Test browser refresh persistence
+- [x] Test empty states
+- [x] Test responsive layout
 
 ### Critical Validation
-- [ ] Notes never appear in report
-- [ ] Report only includes work from selected date
-- [ ] Work status matches current data
-- [ ] Profile changes affect newly generated reports
-- [ ] Saved report content remains consistent
-- [ ] No duplicate work caused by repeated actions
+- [x] Notes never appear in report
+- [x] Report only includes work from selected date
+- [x] Work status matches current data
+- [x] Profile changes affect newly generated reports
+- [x] Saved report content remains consistent
+- [x] No duplicate work caused by repeated actions
 
 ---
 
@@ -287,3 +287,130 @@
 - [ ] Production build succeeds
 - [ ] README is complete
 - [ ] MVP is usable in daily work
+
+---
+
+## Future Project — Design Order Report
+
+> Admin-oriented report system for Rotary & Digital Printing Design Orders.
+>
+> Status: Backlog
+> Priority: After TracerLog MVP
+
+### Design Order Management
+
+#### Data Layer
+- [ ] Define DesignOrder interface
+- [ ] Define design order status type
+- [ ] Setup design_orders table in Dexie
+- [ ] Create design order repository
+- [ ] Create design order store
+
+#### Design Order CRUD
+- [ ] Create Add Design Order form
+- [ ] Input design number
+- [ ] Input customer name
+- [ ] Input designer name
+- [ ] Select design type (Rotary / Digital)
+- [ ] Select design date
+- [ ] Upload design image
+- [ ] Add progress status
+- [ ] Implement create design order
+- [ ] Implement edit design order
+- [ ] Implement delete design order
+- [ ] Add form validation
+- [ ] Add confirmation dialog for delete
+
+### Design Order Table
+
+#### Table Layout
+- [ ] Create Design Order table layout
+- [ ] Display design image thumbnail
+- [ ] Display customer name
+- [ ] Display design number
+- [ ] Display designer name
+- [ ] Display design type
+- [ ] Display progress status
+- [ ] Display design date
+- [ ] Add empty state
+- [ ] Add loading / error state where applicable
+
+#### Table Interaction
+- [ ] Implement search by design number
+- [ ] Implement search by customer
+- [ ] Implement search by designer
+- [ ] Add filter by design type (Rotary / Digital)
+- [ ] Add filter by progress status
+- [ ] Add date filter
+- [ ] Open design order detail
+- [ ] Edit design order from table
+
+### Design Order Report Generator
+
+#### Report Data
+- [ ] Define DesignOrderReport interface
+- [ ] Implement report generation logic
+- [ ] Filter design orders by selected date
+- [ ] Calculate total design count
+- [ ] Generate customer list
+- [ ] Group report data by customer where applicable
+- [ ] Format date in Indonesian
+
+#### Report Template
+- [ ] Implement report header
+- [ ] Display report date
+- [ ] Display total design count
+- [ ] Generate customer list
+- [ ] Validate output against company report format
+
+#### Report UI
+- [ ] Create date picker
+- [ ] Create report preview
+- [ ] Create Copy Report button
+- [ ] Implement clipboard functionality
+- [ ] Show copy success feedback
+- [ ] Implement save report
+- [ ] Implement report history
+- [ ] Implement regenerate report
+
+#### Report Format Validation
+- [ ] Validate weekday formatting
+- [ ] Validate date formatting
+- [ ] Validate total design count
+- [ ] Validate customer list formatting
+- [ ] Validate line break formatting
+- [ ] Validate report output against company format
+
+### Data Management
+
+- [ ] Implement design order history
+- [ ] Add import from Excel
+- [ ] Add export to Excel
+- [ ] Persist design order data to IndexedDB
+- [ ] Test image persistence
+- [ ] Test data persistence after browser refresh
+
+### Testing
+
+- [ ] Test create design order
+- [ ] Test edit design order
+- [ ] Test delete design order
+- [ ] Test image upload
+- [ ] Test search and filters
+- [ ] Test report generation
+- [ ] Test clipboard copy
+- [ ] Test report history
+- [ ] Test browser refresh persistence
+- [ ] Test responsive layout
+- [ ] Test duplicate design order handling
+
+### Critical Validation
+
+- [ ] Total design count matches filtered data
+- [ ] Report only includes design orders from selected date
+- [ ] Customer list matches report data
+- [ ] Rotary and Digital orders are handled correctly
+- [ ] Report output follows company format
+- [ ] No duplicate design orders caused by repeated actions
+
+---
