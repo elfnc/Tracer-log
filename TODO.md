@@ -104,42 +104,42 @@
 ## Day 4 — Daily Report Generator
 
 ### Report Data
-- [ ] Define DailyReport interface
-- [ ] Setup daily_reports table in Dexie
-- [ ] Create report repository
-- [ ] Create report store
-- [ ] Implement report generation logic
-- [ ] Filter work by selected report date
-- [ ] Sort work by creation time
-- [ ] Format date in Indonesian
-- [ ] Read profile data for report header
+- [x] Define DailyReport interface
+- [x] Setup daily_reports table in Dexie
+- [x] Create report repository
+- [x] Create report store
+- [x] Implement report generation logic
+- [x] Filter work by selected report date
+- [x] Sort work by creation time
+- [x] Format date in Indonesian
+- [x] Read profile data for report header
 
 ### Report Template
-- [ ] Implement report header
-- [ ] Display employee name
-- [ ] Display division
-- [ ] Display position
-- [ ] Generate work list
-- [ ] Display R# / customer / status
-- [ ] Exclude work notes from generated report
-- [ ] Handle empty report
+- [x] Implement report header
+- [x] Display employee name
+- [x] Display division
+- [x] Display position
+- [x] Generate work list
+- [x] Display R# / customer / status
+- [x] Exclude work notes from generated report
+- [x] Handle empty report
 
 ### Report UI
-- [ ] Create date picker
-- [ ] Create report preview
-- [ ] Create Copy Report button
-- [ ] Implement clipboard functionality
-- [ ] Show copy success feedback
-- [ ] Implement save report
-- [ ] Implement report history
-- [ ] Implement regenerate report
+- [x] Create date picker
+- [x] Create report preview
+- [x] Create Copy Report button
+- [x] Implement clipboard functionality
+- [x] Show copy success feedback
+- [x] Implement save report
+- [x] Implement report history
+- [x] Implement regenerate report
 
 ### Report Format Validation
-- [ ] Validate weekday formatting
-- [ ] Validate date formatting
-- [ ] Validate uppercase status
-- [ ] Validate line break formatting
-- [ ] Validate report output against company format
+- [x] Validate weekday formatting
+- [x] Validate date formatting
+- [x] Validate uppercase status
+- [x] Validate line break formatting
+- [x] Validate report output against company format
 
 ---
 

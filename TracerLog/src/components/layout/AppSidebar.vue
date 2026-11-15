@@ -14,11 +14,11 @@ import { useTheme } from '@/composables/useTheme'
 const { isDark, toggle } = useTheme()
 
 const nav = [
-  { to: '/', label: 'Dasbor', icon: LayoutDashboard },
-  { to: '/kanban', label: 'Papan Kanban', icon: Columns3 },
-  { to: '/report', label: 'Laporan Harian', icon: FileText },
-  { to: '/history', label: 'Riwayat Kerja', icon: History },
-  { to: '/settings', label: 'Pengaturan', icon: Settings },
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/kanban', label: 'Kanban Board', icon: Columns3 },
+  { to: '/report', label: 'Daily Report', icon: FileText },
+  { to: '/history', label: 'Work History', icon: History },
+  { to: '/settings', label: 'Settings', icon: Settings },
 ]
 </script>
 
@@ -30,7 +30,7 @@ const nav = [
       </div>
       <div class="hidden flex-col md:flex">
         <span class="text-base font-semibold leading-tight tracking-tight text-ink">TracerLog</span>
-        <span class="text-[11px] leading-none text-muted">Catatan Kerja Harian</span>
+        <span class="text-[11px] leading-none text-muted">Daily Worklog</span>
       </div>
     </div>
 
@@ -54,7 +54,7 @@ const nav = [
         @click="toggle"
       >
         <component :is="isDark ? Sun : Moon" class="size-4.5 shrink-0" />
-        <span class="hidden md:inline">{{ isDark ? 'Mode Terang' : 'Mode Gelap' }}</span>
+        <span class="hidden md:inline">{{ isDark ? 'Light mode' : 'Dark mode' }}</span>
       </button>
     </div>
   </aside>

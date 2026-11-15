@@ -53,26 +53,26 @@ function formatDisplayDate(dateStr: string) {
 
 <template>
   <div class="space-y-6">
-    <!-- Header Halaman -->
+    <!-- Page Header -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dasbor</h1>
+        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Dashboard</h1>
         <p class="text-xs text-ink-secondary md:text-sm">Ringkasan aktivitas pekerjaan dan pelaporan harian Anda</p>
       </div>
 
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="isAddModalOpen = true">
           <Plus class="size-4 mr-1.5" />
-          Tambah Pekerjaan
+          Add Work
         </BaseButton>
       </div>
     </div>
 
-    <!-- Kartu Statistik Hari Ini -->
+    <!-- Stats Cards Grid -->
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-muted">
-          <span class="text-xs font-medium text-ink-secondary">Total Hari Ini</span>
+          <span class="text-xs font-medium text-ink-secondary">Total Today</span>
           <Layers class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -82,7 +82,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
-          <span class="text-xs font-medium text-ink-secondary">Selesai</span>
+          <span class="text-xs font-medium text-ink-secondary">Completed</span>
           <CheckCircle2 class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -92,7 +92,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-amber-600 dark:text-amber-400">
-          <span class="text-xs font-medium text-ink-secondary">Dalam Proses</span>
+          <span class="text-xs font-medium text-ink-secondary">In Progress</span>
           <Clock3 class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -102,7 +102,7 @@ function formatDisplayDate(dateStr: string) {
 
       <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
         <div class="flex items-center justify-between text-rose-600 dark:text-rose-400">
-          <span class="text-xs font-medium text-ink-secondary">Revisi</span>
+          <span class="text-xs font-medium text-ink-secondary">Revision</span>
           <AlertCircle class="size-4" />
         </div>
         <p class="mt-2 text-2xl font-bold tracking-tight text-ink">
@@ -111,26 +111,26 @@ function formatDisplayDate(dateStr: string) {
       </div>
     </div>
 
-    <!-- Pekerjaan Terbaru & Shortcut Laporan Harian -->
+    <!-- Recent Work & Daily Report Quick Card -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-      <!-- Daftar Pekerjaan Terbaru (2 Kolom) -->
+      <!-- Recent Work List (2 Cols) -->
       <div class="rounded-[8px] border border-line bg-panel p-5 shadow-xs lg:col-span-2">
         <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
-            <h2 class="text-sm font-semibold text-ink">Pekerjaan Terbaru</h2>
-            <p class="text-xs text-muted">Daftar pekerjaan yang baru saja Anda catat</p>
+            <h2 class="text-sm font-semibold text-ink">Recent Work</h2>
+            <p class="text-xs text-muted">Pekerjaan yang baru saja Anda catat</p>
           </div>
           <button
             type="button"
             class="flex items-center gap-1 text-xs font-medium text-primary hover:underline cursor-pointer"
             @click="router.push('/kanban')"
           >
-            Papan Kanban
+            Kanban Board
             <ArrowRight class="size-3.5" />
           </button>
         </div>
 
-        <!-- Empty state jika belum ada data -->
+        <!-- Empty state -->
         <div
           v-if="workStore.works.length === 0"
           class="flex flex-col items-center justify-center py-10 text-center"
@@ -141,11 +141,11 @@ function formatDisplayDate(dateStr: string) {
           <p class="text-sm font-medium text-ink">Belum ada pekerjaan yang dicatat</p>
           <p class="mt-0.5 text-xs text-muted">Mulai catat pekerjaan pertama Anda hari ini agar tertata rapi!</p>
           <BaseButton size="sm" variant="primary" class="mt-3.5" @click="isAddModalOpen = true">
-            Tambah Pekerjaan Baru
+            Add Work
           </BaseButton>
         </div>
 
-        <!-- Daftar pekerjaan terbaru -->
+        <!-- Recent list -->
         <div v-else class="divide-y divide-line/60 pt-1">
           <div
             v-for="work in workStore.recentWorks"
@@ -176,20 +176,20 @@ function formatDisplayDate(dateStr: string) {
         </div>
       </div>
 
-      <!-- Kartu Cepat Laporan Harian (1 Kolom) -->
+      <!-- Daily Report Quick Card (1 Col) -->
       <div class="flex flex-col justify-between rounded-[8px] border border-line bg-panel p-5 shadow-xs">
         <div class="space-y-3">
           <div class="flex size-9 items-center justify-center rounded-[6px] bg-primary-light text-primary">
             <FileText class="size-5" />
           </div>
           <div>
-            <h2 class="text-sm font-semibold text-ink">Laporan Harian</h2>
+            <h2 class="text-sm font-semibold text-ink">Daily Report</h2>
             <p class="mt-1 text-xs text-ink-secondary leading-relaxed">
               Buat rekap format laporan harian siap salin ke WhatsApp grup kantor secara otomatis.
             </p>
           </div>
           <div class="rounded-[6px] bg-app p-3 text-xs text-ink-secondary border border-line">
-            <span class="font-medium text-ink">Pekerjaan Hari Ini:</span>
+            <span class="font-medium text-ink">Status Hari Ini:</span>
             <p class="mt-1 text-muted">
               {{ workStore.todayWorks.length }} pekerjaan siap dimasukkan ke dalam format rekap.
             </p>
@@ -202,23 +202,23 @@ function formatDisplayDate(dateStr: string) {
             class="w-full justify-between"
             @click="router.push('/report')"
           >
-            <span>Buka Laporan Harian</span>
+            <span>Open Daily Report</span>
             <ArrowRight class="size-4" />
           </BaseButton>
         </div>
       </div>
     </div>
 
-    <!-- Modal Tambah Pekerjaan -->
-    <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
+    <!-- Modal Add Work -->
+    <BaseModal v-model="isAddModalOpen" title="Add Work">
       <WorkForm
-        submit-label="Tambah Pekerjaan"
+        submit-label="Save Work"
         @submit="handleCreateWork"
         @cancel="isAddModalOpen = false"
       />
     </BaseModal>
 
-    <!-- Modal Detail & Edit Pekerjaan -->
+    <!-- Modal Detail Work -->
     <WorkDetailModal
       v-model="isDetailModalOpen"
       :work="activeWork"

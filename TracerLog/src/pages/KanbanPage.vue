@@ -84,10 +84,10 @@ function formatDateLabel(dateStr: string) {
 
 <template>
   <div class="space-y-5">
-    <!-- Header Halaman -->
+    <!-- Page Header -->
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Papan Kanban</h1>
+        <h1 class="text-xl font-semibold tracking-tight text-ink md:text-2xl">Kanban Board</h1>
         <p class="text-xs text-ink-secondary md:text-sm">
           Kelola alur pekerjaan dan geser kartu antar status secara langsung
         </p>
@@ -96,12 +96,12 @@ function formatDateLabel(dateStr: string) {
       <div class="flex items-center gap-2">
         <BaseButton variant="primary" @click="openAddModal('PROGRESS')">
           <Plus class="size-4 mr-1.5" />
-          Tambah Pekerjaan
+          Add Work
         </BaseButton>
       </div>
     </div>
 
-    <!-- Filter & Toolbar Pencarian -->
+    <!-- Filter & Search Toolbar -->
     <div class="flex flex-col gap-3 rounded-[8px] border border-line bg-panel p-3.5 shadow-2xs sm:flex-row sm:items-center sm:justify-between">
       <!-- Search Input -->
       <div class="relative flex-1 max-w-md">
@@ -125,7 +125,7 @@ function formatDateLabel(dateStr: string) {
 
       <!-- Date Filters -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Preset: Hari Ini -->
+        <!-- Preset: Today -->
         <button
           type="button"
           class="rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer"
@@ -136,10 +136,10 @@ function formatDateLabel(dateStr: string) {
           "
           @click="setTodayFilter"
         >
-          Hari Ini
+          Today
         </button>
 
-        <!-- Preset: Semua Tanggal -->
+        <!-- Preset: All Dates -->
         <button
           type="button"
           class="rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer"
@@ -150,7 +150,7 @@ function formatDateLabel(dateStr: string) {
           "
           @click="setAllDatesFilter"
         >
-          Semua Tanggal
+          All Dates
         </button>
 
         <!-- Custom Date Input -->
@@ -164,7 +164,7 @@ function formatDateLabel(dateStr: string) {
           />
         </div>
 
-        <!-- Reset Button jika filter aktif -->
+        <!-- Reset Button -->
         <button
           v-if="isFilterActive"
           type="button"
@@ -178,7 +178,7 @@ function formatDateLabel(dateStr: string) {
       </div>
     </div>
 
-    <!-- Ringkasan Filter & Jumlah Data -->
+    <!-- Filter Summary -->
     <div class="flex items-center justify-between text-xs text-muted px-1">
       <div class="flex items-center gap-2">
         <span>Menampilkan pekerjaan:</span>
@@ -187,10 +187,10 @@ function formatDateLabel(dateStr: string) {
           • Hasil pencarian "{{ workStore.searchQuery }}"
         </span>
       </div>
-      <span>Total: <strong class="text-ink">{{ workStore.filteredWorks.length }}</strong> pekerjaan</span>
+      <span>Total: <strong class="text-ink">{{ workStore.filteredWorks.length }}</strong> works</span>
     </div>
 
-    <!-- Area Kolom Kanban (4 Kolom dengan Scroll Horizontal Responsif) -->
+    <!-- Kanban Columns Grid -->
     <div class="flex items-start gap-4 overflow-x-auto pb-6 scrollbar-thin">
       <KanbanColumn
         v-for="status in WORK_STATUSES"
@@ -203,17 +203,17 @@ function formatDateLabel(dateStr: string) {
       />
     </div>
 
-    <!-- Modal Tambah Pekerjaan -->
-    <BaseModal v-model="isAddModalOpen" title="Tambah Pekerjaan Baru">
+    <!-- Modal Add Work -->
+    <BaseModal v-model="isAddModalOpen" title="Add Work">
       <WorkForm
         :initial-data="{ status: defaultStatusForAdd, workDate: workStore.selectedDate || workStore.todayStr }"
-        submit-label="Tambah ke Papan"
+        submit-label="Add to Board"
         @submit="handleCreateWork"
         @cancel="isAddModalOpen = false"
       />
     </BaseModal>
 
-    <!-- Modal Detail & Edit Pekerjaan -->
+    <!-- Modal Detail Work -->
     <WorkDetailModal
       v-model="isDetailModalOpen"
       :work="activeWork"

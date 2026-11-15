@@ -72,7 +72,7 @@ function validate(): boolean {
   }
 
   if (!form.customer.trim()) {
-    errors.customer = 'Nama pelanggan wajib diisi'
+    errors.customer = 'Nama customer wajib diisi'
     valid = false
   }
 
@@ -118,9 +118,9 @@ function formatDate(isoString?: string) {
 </script>
 
 <template>
-  <BaseModal v-model="open" :title="`Detail Pekerjaan — R# ${work?.rNumber ?? ''}`">
+  <BaseModal v-model="open" :title="`Work Detail — R# ${work?.rNumber ?? ''}`">
     <div v-if="work" class="space-y-4">
-      <!-- Konfirmasi Hapus Dialog -->
+      <!-- Delete Confirmation Alert -->
       <div
         v-if="isConfirmingDelete"
         class="rounded-[8px] border border-red-300/60 bg-red-50/70 p-4 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
@@ -136,31 +136,31 @@ function formatDate(isoString?: string) {
             </p>
             <div class="flex items-center gap-2 pt-2">
               <BaseButton size="sm" variant="danger" @click="handleDelete">
-                Ya, Hapus Sekarang
+                Yes, Delete Now
               </BaseButton>
               <BaseButton size="sm" variant="ghost" @click="isConfirmingDelete = false">
-                Batal
+                Cancel
               </BaseButton>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Form Detail & Edit -->
+      <!-- Detail & Edit Form -->
       <div v-if="!isConfirmingDelete" class="space-y-4">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseInput
             v-model="form.rNumber"
-            label="Nomor Pekerjaan (R#)"
-            placeholder="Misal: 2610240"
+            label="R# (Work Number)"
+            placeholder="Contoh: 2610240"
             :error="errors.rNumber"
             required
           />
 
           <BaseInput
             v-model="form.customer"
-            label="Nama Pelanggan (Customer)"
-            placeholder="Misal: GIS"
+            label="Customer"
+            placeholder="Contoh: GIS"
             :error="errors.customer"
             required
           />
@@ -169,14 +169,14 @@ function formatDate(isoString?: string) {
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseSelect
             v-model="form.status"
-            label="Status Pengerjaan"
+            label="Work Status"
             :options="WORK_STATUSES"
             required
           />
 
           <BaseInput
             v-model="form.workDate"
-            label="Tanggal Pekerjaan"
+            label="Work Date"
             type="date"
             :error="errors.workDate"
             required
@@ -185,20 +185,20 @@ function formatDate(isoString?: string) {
 
         <BaseTextarea
           v-model="form.notes"
-          label="Catatan Internal"
-          placeholder="Tulis catatan area SO, instruksi cetak, atau detail revisi..."
-          hint="Internal — aman dan tidak akan dikirim ke laporan WhatsApp"
+          label="Internal Notes"
+          placeholder="Catatan nomor area SO, instruksi cetak, atau detail revisi..."
+          hint="Internal only — aman dan tidak akan dikirim ke laporan WhatsApp"
           :rows="4"
         />
 
-        <!-- Metadata Waktu -->
+        <!-- Timestamp Metadata -->
         <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 text-[11px] text-muted border-t border-line/60">
           <div class="flex items-center gap-1.5">
             <Clock class="size-3" />
-            <span>Dibuat: {{ formatDate(work.createdAt) }}</span>
+            <span>Created: {{ formatDate(work.createdAt) }}</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <span>Diperbarui: {{ formatDate(work.updatedAt) }}</span>
+            <span>Updated: {{ formatDate(work.updatedAt) }}</span>
           </div>
         </div>
       </div>
@@ -214,13 +214,13 @@ function formatDate(isoString?: string) {
           @click="isConfirmingDelete = true"
         >
           <Trash2 class="size-4 mr-1.5" />
-          Hapus Pekerjaan
+          Delete Work
         </BaseButton>
         <div v-else />
 
         <div class="flex items-center gap-2">
           <BaseButton type="button" variant="ghost" @click="open = false">
-            Tutup
+            Close
           </BaseButton>
           <BaseButton
             v-if="!isConfirmingDelete"
@@ -229,7 +229,7 @@ function formatDate(isoString?: string) {
             :disabled="isSaving"
             @click="handleSave"
           >
-            {{ isSaving ? 'Menyimpan...' : 'Simpan Perubahan' }}
+            {{ isSaving ? 'Saving...' : 'Save Changes' }}
           </BaseButton>
         </div>
       </div>

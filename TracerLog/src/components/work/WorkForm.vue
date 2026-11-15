@@ -17,7 +17,7 @@ const props = withDefaults(
   }>(),
   {
     initialData: undefined,
-    submitLabel: 'Simpan Pekerjaan',
+    submitLabel: 'Save Work',
     isSubmitting: false,
   },
 )
@@ -80,7 +80,7 @@ function validate(): boolean {
   }
 
   if (!form.customer.trim()) {
-    errors.customer = 'Nama pelanggan wajib diisi'
+    errors.customer = 'Nama customer wajib diisi'
     valid = false
   }
 
@@ -110,16 +110,16 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseInput
         v-model="form.rNumber"
-        label="Nomor Pekerjaan (R#)"
-        placeholder="Misal: 2610240"
+        label="R# (Work Number)"
+        placeholder="Contoh: 2610240"
         :error="errors.rNumber"
         required
       />
 
       <BaseInput
         v-model="form.customer"
-        label="Nama Pelanggan (Customer)"
-        placeholder="Misal: GIS"
+        label="Customer"
+        placeholder="Contoh: GIS"
         :error="errors.customer"
         required
       />
@@ -128,14 +128,14 @@ function handleSubmit() {
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseSelect
         v-model="form.status"
-        label="Status Pengerjaan"
+        label="Work Status"
         :options="WORK_STATUSES"
         required
       />
 
       <BaseInput
         v-model="form.workDate"
-        label="Tanggal Pekerjaan"
+        label="Work Date"
         type="date"
         :error="errors.workDate"
         required
@@ -144,18 +144,18 @@ function handleSubmit() {
 
     <BaseTextarea
       v-model="form.notes"
-      label="Catatan Internal (Opsional)"
-      placeholder="Tulis catatan penting seperti nomor area SO, instruksi cetak, detail revisi, dll..."
-      hint="Internal — aman dan tidak akan dikirim ke laporan WhatsApp"
+      label="Internal Notes"
+      placeholder="Catatan nomor area SO, instruksi cetak, detail revisi, dll..."
+      hint="Internal only — aman dan tidak akan dikirim ke laporan WhatsApp"
       :rows="4"
     />
 
     <div class="flex items-center justify-end gap-2 pt-2">
       <BaseButton type="button" variant="ghost" @click="emit('cancel')">
-        Batal
+        Cancel
       </BaseButton>
       <BaseButton type="submit" variant="primary" :disabled="isSubmitting">
-        {{ isSubmitting ? 'Menyimpan...' : submitLabel }}
+        {{ isSubmitting ? 'Saving...' : submitLabel }}
       </BaseButton>
     </div>
   </form>

@@ -80,7 +80,7 @@ function onDrop(e: DragEvent) {
     @dragleave="onDragLeave"
     @drop="onDrop"
   >
-    <!-- Header Kolom -->
+    <!-- Column Header -->
     <div class="flex items-center justify-between px-3.5 py-3 border-b border-line/70">
       <div class="flex items-center gap-2">
         <span class="size-2 rounded-full" :class="columnTheme[status].dot" />
@@ -102,9 +102,9 @@ function onDrop(e: DragEvent) {
       </button>
     </div>
 
-    <!-- Area Daftar Kartu (Droppable) -->
+    <!-- Droppable Cards List -->
     <div class="flex-1 p-2.5 space-y-2.5 overflow-y-auto max-h-[calc(100vh-270px)] min-h-[140px]">
-      <!-- Empty State Kolom -->
+      <!-- Empty State -->
       <div
         v-if="works.length === 0"
         class="flex h-32 flex-col items-center justify-center rounded-[8px] border border-dashed border-line/80 p-4 text-center transition-colors"
@@ -118,7 +118,7 @@ function onDrop(e: DragEvent) {
         </p>
       </div>
 
-      <!-- Kartu-kartu Pekerjaan -->
+      <!-- Work Cards -->
       <WorkCard
         v-for="work in works"
         :key="work.id"
@@ -129,7 +129,7 @@ function onDrop(e: DragEvent) {
       />
     </div>
 
-    <!-- Tombol Tambah di Bawah Kolom -->
+    <!-- Bottom Action -->
     <div class="p-2 border-t border-line/60">
       <button
         type="button"
@@ -137,7 +137,7 @@ function onDrop(e: DragEvent) {
         @click="emit('quickAdd', status)"
       >
         <Plus class="size-3.5" />
-        <span>Tambah Pekerjaan</span>
+        <span>Add Work</span>
       </button>
     </div>
   </div>
