@@ -49,7 +49,7 @@ function formatDisplayDate(dateStr: string) {
     <div class="flex items-start justify-between gap-2">
       <div class="min-w-0 flex-1">
         <span class="text-sm font-semibold tracking-tight text-ink group-hover:text-primary transition-colors">
-          R# {{ work.rNumber }}
+          R#{{ work.rNumber }}
         </span>
         <p class="text-xs font-medium text-ink-secondary truncate">
           {{ work.customer }}

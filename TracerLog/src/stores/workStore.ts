@@ -32,6 +32,7 @@ export const useWorkStore = defineStore('work', () => {
       return (
         w.rNumber.toLowerCase().includes(q) ||
         w.customer.toLowerCase().includes(q) ||
+        `r#${w.rNumber}`.toLowerCase().includes(q) ||
         `r# ${w.rNumber}`.toLowerCase().includes(q)
       )
     })

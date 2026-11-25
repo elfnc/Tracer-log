@@ -122,7 +122,7 @@ function formatDate(isoString?: string) {
 </script>
 
 <template>
-  <BaseModal v-model="open" :title="`Detail Pekerjaan — R# ${work?.rNumber ?? ''}`">
+  <BaseModal v-model="open" :title="`Detail Pekerjaan — R#${work?.rNumber ?? ''}`">
     <div v-if="work" class="space-y-4">
       <!-- Konfirmasi Hapus Dialog -->
       <div
@@ -133,7 +133,7 @@ function formatDate(isoString?: string) {
           <AlertTriangle class="size-4.5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
           <div class="flex-1 space-y-1.5">
             <p class="text-sm font-semibold text-red-900 dark:text-red-200">
-              Hapus pekerjaan R# {{ work.rNumber }}?
+              Hapus pekerjaan R#{{ work.rNumber }}?
             </p>
             <p class="text-xs text-red-700/90 dark:text-red-300/80 leading-relaxed">
               Pekerjaan ini serta seluruh catatan internalnya akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.

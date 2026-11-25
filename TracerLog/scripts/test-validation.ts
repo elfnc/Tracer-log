@@ -60,8 +60,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     'Divisi : digital printing',
     'Bagian : designer junior',
     '',
-    'R# 2610240 / GIS / REVISI SELESAI',
-    'R# 2611138 / GIS / PROGRESS',
+    'R#2610240 / GIS / REVISI SELESAI',
+    'R#2611138 / GIS / PROGRESS',
   ].join('\n')
 
   assert.strictEqual(report, expected)
@@ -105,8 +105,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
 
   const report = generateDailyReportContent('2026-11-13', mockWorks, mockProfile)
   const lines = report.split('\n')
-  assert.strictEqual(lines[5], 'R# 1111111 / A / PROGRESS')
-  assert.strictEqual(lines[6], 'R# 9999999 / B / SELESAI')
+  assert.strictEqual(lines[5], 'R#1111111 / A / PROGRESS')
+  assert.strictEqual(lines[6], 'R#9999999 / B / SELESAI')
   console.log('  ✅ Passed: Earlier work appears first.')
 }
 
@@ -197,8 +197,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     'Divisi : Digital printing',
     'Bagian : Designer junior',
     '',
-    'R# 2611219 / KHARISMA / Mengerjakan Produksi Rotary',
-    'R# 2611229 / GIS / REVISI SELESAI',
+    'R#2611219 / KHARISMA / Mengerjakan Produksi Rotary',
+    'R#2611229 / GIS / REVISI SELESAI',
   ].join('\n')
 
   assert.strictEqual(report, expected)

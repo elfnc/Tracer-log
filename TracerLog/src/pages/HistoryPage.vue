@@ -122,7 +122,7 @@ function openDetail(work: Work) {
 async function handleCreateWork(dto: CreateWorkDto) {
   await workStore.addWork(dto)
   isAddModalOpen.value = false
-  showToast(`Pekerjaan R# ${dto.rNumber} berhasil ditambahkan.`)
+  showToast(`Pekerjaan R#${dto.rNumber} berhasil ditambahkan.`)
 }
 
 async function handleUpdateWork(id: string, data: Parameters<typeof workStore.updateWork>[1]) {
@@ -307,67 +307,92 @@ function formatTimeDisplay(isoStr?: string) {
       </div>
 
       <!-- Works Table / List -->
-      <div v-else class="divide-y divide-line/70">
-        <div
-          v-for="work in filteredWorks"
-          :key="work.id"
-          role="button"
-          tabindex="0"
-          class="group flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 transition-colors hover:bg-primary-light/25 cursor-pointer gap-3"
-          @click="openDetail(work)"
-        >
-          <!-- Left: Work info -->
-          <div class="flex items-start sm:items-center gap-3 min-w-0 flex-1">
-            <div class="flex size-9 shrink-0 items-center justify-center rounded-[6px] bg-primary-light text-primary font-bold text-xs">
-              R#
-            </div>
+      <div v-else class="overflow-x-auto">
+        <table class="w-full text-left text-xs min-w-[760px]">
+          <thead class="border-b border-line/70 bg-app/60 text-[11px] font-semibold uppercase tracking-wider text-muted">
+            <tr>
+              <th scope="col" class="py-3 px-4">No. Design</th>
+              <th scope="col" class="py-3 px-4">Customer</th>
+              <th scope="col" class="py-3 px-4">Deskripsi Pekerjaan</th>
+              <th scope="col" class="py-3 px-4">Catatan</th>
+              <th scope="col" class="py-3 px-4">Tanggal</th>
+              <th scope="col" class="py-3 px-4">Status</th>
+              <th scope="col" class="py-3 px-4 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line/60">
+            <tr
+              v-for="work in filteredWorks"
+              :key="work.id"
+              class="group transition-colors hover:bg-primary-light/25 cursor-pointer"
+              @click="openDetail(work)"
+            >
+              <!-- 1. No. Design -->
+              <td class="py-3.5 px-4 font-semibold text-ink group-hover:text-primary transition-colors whitespace-nowrap">
+                R#{{ work.rNumber }}
+              </td>
 
-            <div class="min-w-0 flex-1 space-y-1">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="text-sm font-semibold text-ink group-hover:text-primary transition-colors">
-                  R# {{ work.rNumber }}
-                </span>
-                <span class="text-xs text-muted">/</span>
-                <span class="text-xs font-medium text-ink-secondary">
-                  {{ work.customer }}
-                </span>
+              <!-- 2. Customer -->
+              <td class="py-3.5 px-4 font-medium text-ink-secondary whitespace-nowrap">
+                {{ work.customer }}
+              </td>
 
-                <!-- Notes indicator -->
+              <!-- 3. Deskripsi Pekerjaan -->
+              <td class="py-3.5 px-4 max-w-[200px]">
                 <span
-                  v-if="work.notes"
-                  title="Ada catatan internal"
-                  class="flex items-center gap-1 rounded-[4px] bg-primary-light/80 px-2 py-0.5 text-[10px] font-medium text-primary"
+                  v-if="work.description && work.description.trim()"
+                  class="text-ink line-clamp-2"
+                  :title="work.description"
                 >
-                  <FileText class="size-2.5" />
-                  <span>Catatan internal</span>
+                  {{ work.description }}
                 </span>
-              </div>
+                <span v-else class="text-muted/60">—</span>
+              </td>
 
-              <!-- Internal notes preview snippet if present -->
-              <p v-if="work.notes" class="text-xs text-muted truncate max-w-xl line-clamp-1 italic">
-                "{{ work.notes }}"
-              </p>
-            </div>
-          </div>
+              <!-- 4. Catatan Internal -->
+              <td class="py-3.5 px-4 max-w-[180px]">
+                <div v-if="work.notes && work.notes.trim()" class="flex items-center gap-1.5" :title="work.notes">
+                  <span class="flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-primary-light text-primary">
+                    <FileText class="size-2.5" />
+                  </span>
+                  <span class="text-muted truncate italic line-clamp-1">
+                    {{ work.notes }}
+                  </span>
+                </div>
+                <span v-else class="text-muted/60">—</span>
+              </td>
 
-          <!-- Right: Date & Status Badge -->
-          <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t border-line/40 sm:border-0 text-xs">
-            <div class="flex flex-col sm:items-end text-muted text-[11px]">
-              <div class="flex items-center gap-1">
-                <Calendar class="size-3" />
-                <span>{{ formatDateDisplay(work.workDate) }}</span>
-              </div>
-              <div class="flex items-center gap-1 text-[10px] text-muted">
-                <Clock class="size-2.5" />
-                <span>Input: {{ formatTimeDisplay(work.createdAt) }}</span>
-              </div>
-            </div>
+              <!-- 5. Tanggal & Jam Input -->
+              <td class="py-3.5 px-4 whitespace-nowrap">
+                <div class="text-ink font-medium">
+                  {{ formatDateDisplay(work.workDate) }}
+                </div>
+                <div class="text-[10px] text-muted flex items-center gap-1 mt-0.5">
+                  <Clock class="size-2.5" />
+                  <span>{{ formatTimeDisplay(work.createdAt) }}</span>
+                </div>
+              </td>
 
-            <WorkStatusBadge :status="work.status" />
+              <!-- 6. Status -->
+              <td class="py-3.5 px-4 whitespace-nowrap">
+                <WorkStatusBadge :status="work.status" />
+              </td>
 
-            <ChevronRight class="size-4 text-muted group-hover:text-primary transition-colors hidden sm:block" />
-          </div>
-        </div>
+              <!-- 7. Aksi -->
+              <td class="py-3.5 px-4 text-center whitespace-nowrap" @click.stop>
+                <button
+                  type="button"
+                  title="Lihat atau edit detail pekerjaan"
+                  class="inline-flex items-center gap-1 rounded-[4px] border border-line bg-app px-2.5 py-1 text-[11px] font-medium text-ink-secondary hover:border-primary/40 hover:bg-primary-light hover:text-primary transition-colors cursor-pointer"
+                  @click="openDetail(work)"
+                >
+                  <span>Detail</span>
+                  <ChevronRight class="size-3" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 

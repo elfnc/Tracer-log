@@ -172,7 +172,7 @@ async function handleSave() {
 async function handleCreateWork(dto: CreateWorkDto) {
   await workStore.addWork(dto)
   isAddModalOpen.value = false
-  showToast(`Pekerjaan R# ${dto.rNumber} berhasil ditambahkan.`)
+  showToast(`Pekerjaan R#${dto.rNumber} berhasil ditambahkan.`)
 }
 
 function openDetail(work: Work) {
@@ -417,7 +417,7 @@ async function copyFromHistory(report: DailyReport) {
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5">
                   <span class="text-xs font-semibold text-ink group-hover:text-primary transition-colors">
-                    R# {{ work.rNumber }}
+                    R#{{ work.rNumber }}
                   </span>
                   <span class="text-[11px] text-muted">/</span>
                   <span class="text-xs font-medium text-ink-secondary truncate">

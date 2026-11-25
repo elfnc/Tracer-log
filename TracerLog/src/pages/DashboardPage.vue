@@ -166,7 +166,7 @@ function formatDisplayDate(dateStr: string) {
             @click="openDetail(work)"
           >
             <div class="flex items-center gap-2.5">
-              <span class="text-sm font-semibold text-ink">R# {{ work.rNumber }}</span>
+              <span class="text-sm font-semibold text-ink">R#{{ work.rNumber }}</span>
               <span class="text-xs text-muted">/</span>
               <span class="text-xs font-medium text-ink-secondary">{{ work.customer }}</span>
               <span

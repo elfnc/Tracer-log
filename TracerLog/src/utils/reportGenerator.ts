@@ -40,7 +40,7 @@ export function generateDailyReportContent(
   const workLines = sortedWorks.map((w) => {
     const desc = (w.description ?? '').trim()
     const suffix = desc ? desc : w.status.toUpperCase()
-    return `R# ${w.rNumber} / ${w.customer} / ${suffix}`
+    return `R#${w.rNumber} / ${w.customer} / ${suffix}`
   })
 
   const lines = [header]

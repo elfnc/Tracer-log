@@ -94,6 +94,7 @@ export const workRepository = {
       (item) =>
         item.rNumber.toLowerCase().includes(q) ||
         item.customer.toLowerCase().includes(q) ||
+        `r#${item.rNumber}`.toLowerCase().includes(q) ||
         `r# ${item.rNumber}`.toLowerCase().includes(q),
     )
   },
