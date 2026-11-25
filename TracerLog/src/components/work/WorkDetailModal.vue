@@ -18,7 +18,7 @@ const props = defineProps<{
 const open = defineModel<boolean>({ required: true })
 
 const emit = defineEmits<{
-  (e: 'update', id: string, data: { rNumber: string; customer: string; status: WorkStatus; workDate: string; notes: string }): void
+  (e: 'update', id: string, data: { rNumber: string; customer: string; status: WorkStatus; workDate: string; description: string; notes: string }): void
   (e: 'delete', id: string): void
 }>()
 
@@ -27,12 +27,14 @@ const form = reactive<{
   customer: string
   status: WorkStatus
   workDate: string
+  description: string
   notes: string
 }>({
   rNumber: '',
   customer: '',
   status: 'PROGRESS',
   workDate: '',
+  description: '',
   notes: '',
 })
 
@@ -54,6 +56,7 @@ watch(
       form.customer = w.customer
       form.status = w.status
       form.workDate = w.workDate
+      form.description = w.description || ''
       form.notes = w.notes || ''
     }
   },
@@ -94,6 +97,7 @@ function handleSave() {
     customer: form.customer.trim(),
     status: form.status,
     workDate: form.workDate,
+    description: form.description.trim(),
     notes: form.notes.trim(),
   })
   isSaving.value = false
@@ -182,6 +186,14 @@ function formatDate(isoString?: string) {
             required
           />
         </div>
+
+        <BaseTextarea
+          v-model="form.description"
+          label="Keterangan Pekerjaan"
+          placeholder="Contoh: Mengerjakan Produksi Rotary, lanjut design baru..."
+          hint="Muncul di laporan WhatsApp — jika diisi, menggantikan status di output laporan"
+          :rows="2"
+        />
 
         <BaseTextarea
           v-model="form.notes"

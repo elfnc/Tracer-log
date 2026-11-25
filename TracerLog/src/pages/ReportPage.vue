@@ -10,13 +10,14 @@ import {
   History,
   AlertCircle,
   FileText,
+  X,
 } from '@lucide/vue'
 import { format, subDays, parseISO } from 'date-fns'
 import { id as idLocale } from 'date-fns/locale'
 import { useWorkStore } from '@/stores/workStore'
 import { useProfileStore } from '@/stores/profileStore'
 import { useReportStore } from '@/stores/reportStore'
-import { generateDailyReportContent } from '@/utils/reportGenerator'
+import { generateDailyReportContent, type ReportTimeSlot } from '@/utils/reportGenerator'
 import type { Work, DailyReport } from '@/types'
 import type { CreateWorkDto } from '@/repositories/workRepository'
 import BaseButton from '@/components/ui/BaseButton.vue'
@@ -39,6 +40,22 @@ const activeWork = ref<Work | null>(null)
 const saveSuccess = ref(false)
 const toastMessage = ref<string | null>(null)
 let toastTimeout: ReturnType<typeof setTimeout> | null = null
+
+// Time-slot state
+const slotStart = ref('')
+const slotEnd = ref('')
+
+const timeSlot = computed<ReportTimeSlot | undefined>(() => {
+  if (slotStart.value && slotEnd.value) {
+    return { start: slotStart.value, end: slotEnd.value }
+  }
+  return undefined
+})
+
+function clearTimeSlot() {
+  slotStart.value = ''
+  slotEnd.value = ''
+}
 
 function showToast(msg: string) {
   toastMessage.value = msg
@@ -63,12 +80,13 @@ const dateWorks = computed(() => {
     .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 })
 
-// Generated report string based on current works and profile
+// Generated report string based on current works, profile, and optional time-slot
 const generatedReportText = computed(() => {
   return generateDailyReportContent(
     selectedDate.value,
     dateWorks.value,
     profileStore.profile,
+    timeSlot.value,
   )
 })
 
@@ -186,7 +204,7 @@ async function copyFromHistory(report: DailyReport) {
 
     <!-- Date Selection Controls -->
     <div class="rounded-[8px] border border-line bg-panel p-4 shadow-2xs">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div class="space-y-1">
           <label class="block text-xs font-medium text-ink-secondary">Tanggal Laporan</label>
           <div class="flex flex-wrap items-center gap-2">
@@ -222,11 +240,44 @@ async function copyFromHistory(report: DailyReport) {
           </div>
         </div>
 
-        <!-- Date Info Badge -->
-        <div class="rounded-[6px] bg-app border border-line px-3.5 py-2 text-xs">
-          <span class="text-muted block text-[11px]">Tanggal Laporan Terpilih:</span>
-          <span class="font-semibold text-ink">{{ formattedSelectedDate(selectedDate) }}</span>
+        <!-- Time-Slot Picker -->
+        <div class="space-y-1">
+          <label class="block text-xs font-medium text-ink-secondary">Slot Waktu (Opsional)</label>
+          <div class="flex items-center gap-2">
+            <div class="relative flex items-center">
+              <Clock class="pointer-events-none absolute left-2.5 size-3.5 text-muted" />
+              <input
+                v-model="slotStart"
+                type="time"
+                placeholder="Mulai"
+                class="rounded-[6px] border border-line bg-app pl-8 pr-2.5 py-1.5 text-xs text-ink font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:[color-scheme:dark] w-[110px]"
+              />
+            </div>
+            <span class="text-xs text-muted font-medium">—</span>
+            <input
+              v-model="slotEnd"
+              type="time"
+              placeholder="Selesai"
+              class="rounded-[6px] border border-line bg-app px-2.5 py-1.5 text-xs text-ink font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:[color-scheme:dark] w-[110px]"
+            />
+            <button
+              v-if="slotStart || slotEnd"
+              type="button"
+              title="Hapus slot waktu"
+              class="flex size-7 items-center justify-center rounded-[4px] border border-line bg-app text-muted hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer dark:hover:bg-red-950/40 dark:hover:border-red-900/60"
+              @click="clearTimeSlot"
+            >
+              <X class="size-3.5" />
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Date Info Badge -->
+      <div class="mt-3 rounded-[6px] bg-app border border-line px-3.5 py-2 text-xs">
+        <span class="text-muted block text-[11px]">Tanggal Laporan Terpilih:</span>
+        <span class="font-semibold text-ink">{{ formattedSelectedDate(selectedDate) }}</span>
+        <span v-if="timeSlot" class="text-muted ml-2">• {{ timeSlot.start }} - {{ timeSlot.end }}</span>
       </div>
     </div>
 
@@ -252,9 +303,10 @@ async function copyFromHistory(report: DailyReport) {
           </div>
           <ul class="list-disc list-inside space-y-1 text-muted text-[11px] leading-relaxed">
             <li>Hanya mencakup pekerjaan pada tanggal yang dipilih.</li>
-            <li>Status pekerjaan otomatis diformat kapital (UPPERCASE).</li>
+            <li>Jika keterangan pekerjaan diisi → menggantikan status di output laporan.</li>
+            <li>Jika keterangan kosong → status ditampilkan (UPPERCASE, format standar).</li>
             <li>Catatan internal (notes) <strong>tidak pernah disertakan</strong> ke dalam laporan WhatsApp.</li>
-            <li>Format rekap mengikuti nama hari Indonesia dan identitas profil Anda.</li>
+            <li>Slot waktu opsional — input jam mulai &amp; selesai secara bebas.</li>
           </ul>
         </div>
       </div>

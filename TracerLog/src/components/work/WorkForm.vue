@@ -32,12 +32,14 @@ const form = reactive<{
   customer: string
   status: WorkStatus
   workDate: string
+  description: string
   notes: string
 }>({
   rNumber: '',
   customer: '',
   status: 'PROGRESS',
   workDate: format(new Date(), 'yyyy-MM-dd'),
+  description: '',
   notes: '',
 })
 
@@ -53,12 +55,14 @@ function initForm() {
     form.customer = props.initialData.customer || ''
     form.status = props.initialData.status || 'PROGRESS'
     form.workDate = props.initialData.workDate || format(new Date(), 'yyyy-MM-dd')
+    form.description = props.initialData.description || ''
     form.notes = props.initialData.notes || ''
   } else {
     form.rNumber = ''
     form.customer = ''
     form.status = 'PROGRESS'
     form.workDate = format(new Date(), 'yyyy-MM-dd')
+    form.description = ''
     form.notes = ''
   }
   errors.rNumber = undefined
@@ -100,6 +104,7 @@ function handleSubmit() {
     customer: form.customer.trim(),
     status: form.status,
     workDate: form.workDate,
+    description: form.description.trim(),
     notes: form.notes.trim(),
   })
 }
@@ -141,6 +146,14 @@ function handleSubmit() {
         required
       />
     </div>
+
+    <BaseTextarea
+      v-model="form.description"
+      label="Keterangan Pekerjaan (Opsional)"
+      placeholder="Contoh: Mengerjakan Produksi Rotary, lanjut design baru..."
+      hint="Muncul di laporan WhatsApp — jika diisi, menggantikan status di output laporan"
+      :rows="2"
+    />
 
     <BaseTextarea
       v-model="form.notes"

@@ -12,7 +12,8 @@ export interface Work {
   rNumber: string
   customer: string
   status: WorkStatus
-  notes: string
+  description: string // keterangan pekerjaan — masuk laporan, menggantikan status jika diisi
+  notes: string // catatan internal — tidak masuk laporan
   workDate: string // YYYY-MM-DD
   createdAt: string // ISO
   updatedAt: string // ISO

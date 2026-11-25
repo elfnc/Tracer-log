@@ -2,6 +2,11 @@ import { format, parseISO } from 'date-fns'
 import { id as idLocale } from 'date-fns/locale'
 import type { Work, Profile } from '@/types'
 
+export interface ReportTimeSlot {
+  start: string // HH:mm
+  end: string // HH:mm
+}
+
 export function formatReportDateHeader(dateStr: string): string {
   try {
     const d = parseISO(dateStr)
@@ -17,6 +22,7 @@ export function generateDailyReportContent(
   reportDate: string,
   works: Work[],
   profile: Profile,
+  timeSlot?: ReportTimeSlot,
 ): string {
   const header = formatReportDateHeader(reportDate)
   const nameLine = `Nama : ${profile.name}`
@@ -28,18 +34,23 @@ export function generateDailyReportContent(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
   )
 
-  const workLines = sortedWorks.map(
-    (w) => `R# ${w.rNumber} / ${w.customer} / ${w.status.toUpperCase()}`,
-  )
+  // Satu baris per work:
+  // Ada description → R# / Customer / description (status tidak ditampilkan)
+  // Tanpa description → R# / Customer / STATUS (format MVP)
+  const workLines = sortedWorks.map((w) => {
+    const desc = (w.description ?? '').trim()
+    const suffix = desc ? desc : w.status.toUpperCase()
+    return `R# ${w.rNumber} / ${w.customer} / ${suffix}`
+  })
 
-  const lines = [
-    header,
-    nameLine,
-    divisionLine,
-    positionLine,
-    '', // Baris kosong pemisah
-    ...workLines,
-  ]
+  const lines = [header]
+
+  // Sisipkan slot waktu jika diisi
+  if (timeSlot?.start && timeSlot?.end) {
+    lines.push(`${timeSlot.start} - ${timeSlot.end}`)
+  }
+
+  lines.push(nameLine, divisionLine, positionLine, '', ...workLines)
 
   return lines.join('\n')
 }

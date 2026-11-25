@@ -54,6 +54,13 @@ function formatDisplayDate(dateStr: string) {
         <p class="text-xs font-medium text-ink-secondary truncate">
           {{ work.customer }}
         </p>
+        <p
+          v-if="work.description && work.description.trim()"
+          class="text-[11px] text-muted truncate mt-0.5"
+          :title="work.description"
+        >
+          {{ work.description }}
+        </p>
       </div>
 
       <div class="flex items-center gap-1.5 shrink-0">

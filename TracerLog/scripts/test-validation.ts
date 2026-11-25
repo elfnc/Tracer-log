@@ -28,6 +28,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
       rNumber: '2610240',
       customer: 'GIS',
       status: 'REVISI SELESAI',
+      description: '',
       notes: 'SECRET_SO_AREA_14_DO_NOT_LEAK',
       workDate: '2026-11-13',
       createdAt: '2026-11-13T08:00:00.000Z',
@@ -38,6 +39,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
       rNumber: '2611138',
       customer: 'GIS',
       status: 'PROGRESS',
+      description: '',
       notes: 'INTERNAL_CONFIDENTIAL_INSTRUCTIONS',
       workDate: '2026-11-13',
       createdAt: '2026-11-13T09:00:00.000Z',
@@ -82,6 +84,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
       rNumber: '9999999',
       customer: 'B',
       status: 'SELESAI',
+      description: '',
       notes: '',
       workDate: '2026-11-13',
       createdAt: '2026-11-13T14:00:00.000Z',
@@ -92,6 +95,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
       rNumber: '1111111',
       customer: 'A',
       status: 'PROGRESS',
+      description: '',
       notes: '',
       workDate: '2026-11-13',
       createdAt: '2026-11-13T07:00:00.000Z',
@@ -120,6 +124,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     rNumber: '123',
     customer: 'ABC',
     status: 'revisi progress' as unknown as WorkStatus,
+    description: '',
     notes: '',
     workDate: '2026-11-13',
     createdAt: '2026-11-13T08:00:00.000Z',
@@ -144,6 +149,61 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
   assert.strictEqual(report.includes('divisi : marketing'), true)
   assert.strictEqual(report.includes('bagian : senior lead'), true)
   console.log('  ✅ Passed: New profile values reflected.')
+}
+
+// 6. Test Time-Slot & Work Description Replaces Status
+{
+  console.log('\nTest 6: Time-slot header & description replacing status on same line...')
+  const mockProfile: Profile = {
+    id: 'default',
+    name: 'Elfrian T. Setiawan',
+    division: 'Digital printing',
+    position: 'Designer junior',
+  }
+  const mockWorks: Work[] = [
+    {
+      id: '1',
+      rNumber: '2611219',
+      customer: 'KHARISMA',
+      status: 'SELESAI',
+      description: 'Mengerjakan Produksi Rotary',
+      notes: 'SECRET_NOTE',
+      workDate: '2026-11-25',
+      createdAt: '2026-11-25T08:00:00.000Z',
+      updatedAt: '2026-11-25T08:00:00.000Z',
+    },
+    {
+      id: '2',
+      rNumber: '2611229',
+      customer: 'GIS',
+      status: 'REVISI SELESAI',
+      description: '',
+      notes: '',
+      workDate: '2026-11-25',
+      createdAt: '2026-11-25T09:00:00.000Z',
+      updatedAt: '2026-11-25T09:00:00.000Z',
+    },
+  ]
+
+  const report = generateDailyReportContent('2026-11-25', mockWorks, mockProfile, {
+    start: '08:00',
+    end: '10:00',
+  })
+
+  const expected = [
+    'Rekap laporan, Rabu 25 - 11 - 2026',
+    '08:00 - 10:00',
+    'Nama : Elfrian T. Setiawan',
+    'divisi : Digital printing',
+    'bagian : Designer junior',
+    '',
+    'R# 2611219 / KHARISMA / Mengerjakan Produksi Rotary',
+    'R# 2611229 / GIS / REVISI SELESAI',
+  ].join('\n')
+
+  assert.strictEqual(report, expected)
+  assert.strictEqual(report.includes('SECRET_NOTE'), false)
+  console.log('  ✅ Passed: Time-slot & description replacement verified.')
 }
 
 console.log('\n🎉 ALL CRITICAL VALIDATIONS AND UNIT TESTS PASSED!')

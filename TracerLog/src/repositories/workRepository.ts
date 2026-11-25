@@ -6,6 +6,7 @@ export interface CreateWorkDto {
   customer: string
   status: WorkStatus
   workDate: string
+  description?: string
   notes?: string
 }
 
@@ -14,6 +15,7 @@ export interface UpdateWorkDto {
   customer?: string
   status?: WorkStatus
   workDate?: string
+  description?: string
   notes?: string
 }
 
@@ -39,6 +41,7 @@ export const workRepository = {
       rNumber: cleanRNumber,
       customer: dto.customer.trim(),
       status: dto.status,
+      description: (dto.description || '').trim(),
       notes: (dto.notes || '').trim(),
       workDate: dto.workDate,
       createdAt: now,
@@ -61,6 +64,7 @@ export const workRepository = {
       rNumber: cleanRNumber,
       customer: dto.customer !== undefined ? dto.customer.trim() : existing.customer,
       status: dto.status ?? existing.status,
+      description: dto.description !== undefined ? dto.description.trim() : (existing.description ?? ''),
       notes: dto.notes !== undefined ? dto.notes.trim() : existing.notes,
       workDate: dto.workDate ?? existing.workDate,
       updatedAt: now,
