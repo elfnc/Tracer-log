@@ -144,7 +144,7 @@ function handleResetDefault() {
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
       <!-- Profile Form Section (7 cols) -->
       <div class="lg:col-span-7 space-y-6">
-        <div class="rounded-[10px] border border-line bg-panel p-5 shadow-xs space-y-4">
+        <div class="glass-card rounded-[10px] p-5 space-y-4">
           <div class="flex items-center gap-2.5 pb-3 border-b border-line">
             <div class="flex size-8 items-center justify-center rounded-[6px] bg-primary-light text-primary">
               <User class="size-4.5" />
@@ -175,7 +175,7 @@ function handleResetDefault() {
 
               <BaseInput
                 v-model="form.position"
-                label="Bagian / Posisi"
+                label="Bagian"
                 placeholder="Contoh: designer junior"
                 :error="errors.position"
                 required
@@ -202,7 +202,7 @@ function handleResetDefault() {
         </div>
 
         <!-- Appearance & Theme Card -->
-        <div class="rounded-[10px] border border-line bg-panel p-5 shadow-xs space-y-4">
+        <div class="glass-card rounded-[10px] p-5 space-y-4">
           <div class="flex items-center gap-2.5 pb-3 border-b border-line">
             <div class="flex size-8 items-center justify-center rounded-[6px] bg-primary-light text-primary">
               <Sun class="size-4.5" />
@@ -232,7 +232,7 @@ function handleResetDefault() {
       <!-- Live Header Preview & Data Info (5 cols) -->
       <div class="lg:col-span-5 space-y-6">
         <!-- Live Preview of Header -->
-        <div class="rounded-[10px] border border-line bg-panel p-5 shadow-xs space-y-3">
+        <div class="glass-card rounded-[10px] p-5 space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-line">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-ink">
               Pratinjau Header WhatsApp
@@ -247,14 +247,14 @@ function handleResetDefault() {
           <div class="rounded-[8px] border border-line/80 bg-app p-3.5 font-mono text-xs leading-relaxed text-ink select-text">
             <p>Rekap laporan, {{ sampleDateStr }}</p>
             <p>Nama : {{ form.name || '...' }}</p>
-            <p>divisi : {{ form.division || '...' }}</p>
-            <p>bagian : {{ form.position || '...' }}</p>
+            <p>Divisi : {{ form.division || '...' }}</p>
+            <p>Bagian : {{ form.position || '...' }}</p>
             <p class="text-muted mt-2">...</p>
           </div>
         </div>
 
         <!-- Local-First Privacy Notice -->
-        <div class="rounded-[10px] border border-line bg-panel p-5 shadow-xs space-y-3">
+        <div class="glass-card rounded-[10px] p-5 space-y-3">
           <div class="flex items-center gap-2 text-primary font-semibold text-xs">
             <ShieldCheck class="size-4" />
             <span>Penyimpanan Lokal & Privasi (Local-First)</span>

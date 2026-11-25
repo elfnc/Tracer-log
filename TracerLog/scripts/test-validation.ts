@@ -57,8 +57,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
   const expected = [
     'Rekap laporan, Jumat 13 - 11 - 2026',
     'Nama : Elfrian T. Setiawan',
-    'divisi : digital printing',
-    'bagian : designer junior',
+    'Divisi : digital printing',
+    'Bagian : designer junior',
     '',
     'R# 2610240 / GIS / REVISI SELESAI',
     'R# 2611138 / GIS / PROGRESS',
@@ -146,8 +146,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
   }
   const report = generateDailyReportContent('2026-11-13', [], updatedProfile)
   assert.strictEqual(report.includes('Nama : Budi Santoso'), true)
-  assert.strictEqual(report.includes('divisi : marketing'), true)
-  assert.strictEqual(report.includes('bagian : senior lead'), true)
+  assert.strictEqual(report.includes('Divisi : marketing'), true)
+  assert.strictEqual(report.includes('Bagian : senior lead'), true)
   console.log('  ✅ Passed: New profile values reflected.')
 }
 
@@ -194,8 +194,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     'Rekap laporan, Rabu 25 - 11 - 2026',
     '08:00 - 10:00',
     'Nama : Elfrian T. Setiawan',
-    'divisi : Digital printing',
-    'bagian : Designer junior',
+    'Divisi : Digital printing',
+    'Bagian : Designer junior',
     '',
     'R# 2611219 / KHARISMA / Mengerjakan Produksi Rotary',
     'R# 2611229 / GIS / REVISI SELESAI',

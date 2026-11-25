@@ -17,7 +17,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="rounded-[10px] border border-line bg-panel shadow-xs overflow-hidden">
+  <div class="glass-card rounded-[10px] overflow-hidden">
     <!-- Header Preview Card -->
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line bg-app/50 px-4 py-3">
       <div class="flex items-center gap-2">
@@ -50,6 +50,11 @@ const emit = defineEmits<{
       </div>
     </div>
 
+    <!-- Optional Controls Slot (e.g. Time-Slot 24h) -->
+    <div v-if="$slots.controls" class="border-b border-line/70 bg-app/25 px-4 py-2.5">
+      <slot name="controls" />
+    </div>
+
     <!-- WhatsApp Styled Monospace Content Box -->
     <div class="p-4 sm:p-6 bg-app/30">
       <div class="relative rounded-[8px] border border-line/80 bg-panel p-4 sm:p-5 font-mono text-xs sm:text-sm leading-relaxed text-ink shadow-2xs whitespace-pre-wrap select-text">
@@ -58,7 +63,7 @@ const emit = defineEmits<{
     </div>
 
     <!-- Bottom Action Bar with Primary Copy CTA -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-line bg-panel px-4 py-3">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-line/70 px-4 py-3">
       <p class="text-xs text-muted">
         Siap disalin ke WhatsApp grup kantor (catatan internal otomatis dikecualikan).
       </p>

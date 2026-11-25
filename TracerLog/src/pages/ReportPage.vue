@@ -41,13 +41,55 @@ const saveSuccess = ref(false)
 const toastMessage = ref<string | null>(null)
 let toastTimeout: ReturnType<typeof setTimeout> | null = null
 
-// Time-slot state
+// Time-slot state (24-hour HH:mm)
 const slotStart = ref('')
 const slotEnd = ref('')
+const TIME_24H_REGEX = /^([01]\d|2[0-3]):[0-5]\d$/
+
+function normalize24hTime(raw: string): string {
+  const trimmed = raw.trim()
+  if (!trimmed) return ''
+  const digits = trimmed.replace(/\D/g, '')
+  let candidate = trimmed
+  if (/^\d{3,4}$/.test(digits) && !trimmed.includes(':')) {
+    const padded = digits.padStart(4, '0')
+    candidate = `${padded.slice(0, 2)}:${padded.slice(2, 4)}`
+  } else if (/^\d{1,2}:\d{1,2}$/.test(trimmed)) {
+    const [h, m] = trimmed.split(':')
+    candidate = `${h.padStart(2, '0')}:${m.padStart(2, '0')}`
+  }
+  return TIME_24H_REGEX.test(candidate) ? candidate : trimmed
+}
+
+function handleTimeInput(target: 'start' | 'end', event: Event) {
+  const input = event.target as HTMLInputElement
+  let val = input.value.replace(/[^\d:]/g, '')
+  if (val.length === 2 && !val.includes(':') && (target === 'start' ? slotStart.value : slotEnd.value).length < 2) {
+    val = `${val}:`
+  }
+  if (val.length > 5) val = val.slice(0, 5)
+  if (target === 'start') slotStart.value = val
+  else slotEnd.value = val
+}
+
+function handleTimeBlur(target: 'start' | 'end') {
+  if (target === 'start') slotStart.value = normalize24hTime(slotStart.value)
+  else slotEnd.value = normalize24hTime(slotEnd.value)
+}
+
+const isTimeSlotInvalid = computed(() => {
+  const hasStart = slotStart.value.trim().length > 0
+  const hasEnd = slotEnd.value.trim().length > 0
+  if (hasStart && !TIME_24H_REGEX.test(slotStart.value.trim())) return true
+  if (hasEnd && !TIME_24H_REGEX.test(slotEnd.value.trim())) return true
+  return false
+})
 
 const timeSlot = computed<ReportTimeSlot | undefined>(() => {
-  if (slotStart.value && slotEnd.value) {
-    return { start: slotStart.value, end: slotEnd.value }
+  const start = slotStart.value.trim()
+  const end = slotEnd.value.trim()
+  if (TIME_24H_REGEX.test(start) && TIME_24H_REGEX.test(end)) {
+    return { start, end }
   }
   return undefined
 })
@@ -203,8 +245,8 @@ async function copyFromHistory(report: DailyReport) {
     </div>
 
     <!-- Date Selection Controls -->
-    <div class="rounded-[8px] border border-line bg-panel p-4 shadow-2xs">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="glass-card rounded-[10px] p-4">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="space-y-1">
           <label class="block text-xs font-medium text-ink-secondary">Tanggal Laporan</label>
           <div class="flex flex-wrap items-center gap-2">
@@ -240,44 +282,12 @@ async function copyFromHistory(report: DailyReport) {
           </div>
         </div>
 
-        <!-- Time-Slot Picker -->
-        <div class="space-y-1">
-          <label class="block text-xs font-medium text-ink-secondary">Slot Waktu (Opsional)</label>
-          <div class="flex items-center gap-2">
-            <div class="relative flex items-center">
-              <Clock class="pointer-events-none absolute left-2.5 size-3.5 text-muted" />
-              <input
-                v-model="slotStart"
-                type="time"
-                placeholder="Mulai"
-                class="rounded-[6px] border border-line bg-app pl-8 pr-2.5 py-1.5 text-xs text-ink font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:[color-scheme:dark] w-[110px]"
-              />
-            </div>
-            <span class="text-xs text-muted font-medium">—</span>
-            <input
-              v-model="slotEnd"
-              type="time"
-              placeholder="Selesai"
-              class="rounded-[6px] border border-line bg-app px-2.5 py-1.5 text-xs text-ink font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:[color-scheme:dark] w-[110px]"
-            />
-            <button
-              v-if="slotStart || slotEnd"
-              type="button"
-              title="Hapus slot waktu"
-              class="flex size-7 items-center justify-center rounded-[4px] border border-line bg-app text-muted hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer dark:hover:bg-red-950/40 dark:hover:border-red-900/60"
-              @click="clearTimeSlot"
-            >
-              <X class="size-3.5" />
-            </button>
-          </div>
+        <!-- Date Info Badge -->
+        <div class="rounded-[6px] bg-app border border-line px-3.5 py-2 text-xs">
+          <span class="text-muted block text-[11px]">Tanggal Laporan Terpilih:</span>
+          <span class="font-semibold text-ink">{{ formattedSelectedDate(selectedDate) }}</span>
+          <span v-if="timeSlot" class="text-muted ml-2">• {{ timeSlot.start }} - {{ timeSlot.end }}</span>
         </div>
-      </div>
-
-      <!-- Date Info Badge -->
-      <div class="mt-3 rounded-[6px] bg-app border border-line px-3.5 py-2 text-xs">
-        <span class="text-muted block text-[11px]">Tanggal Laporan Terpilih:</span>
-        <span class="font-semibold text-ink">{{ formattedSelectedDate(selectedDate) }}</span>
-        <span v-if="timeSlot" class="text-muted ml-2">• {{ timeSlot.start }} - {{ timeSlot.end }}</span>
       </div>
     </div>
 
@@ -293,10 +303,57 @@ async function copyFromHistory(report: DailyReport) {
           @copy="handleCopy"
           @save="handleSave"
           @regenerate="() => showToast('Format laporan telah diperbarui ulang.')"
-        />
+        >
+          <template #controls>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5 text-xs font-medium text-ink-secondary">
+                <Clock class="size-3.5 text-primary" />
+                <span>Slot Waktu 24 Jam (Opsional)</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input
+                  :value="slotStart"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="5"
+                  placeholder="08:00"
+                  aria-label="Jam mulai (format 24 jam)"
+                  class="rounded-[6px] border border-line bg-app px-2.5 py-1 text-xs text-ink font-medium font-mono text-center focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-[72px]"
+                  @input="handleTimeInput('start', $event)"
+                  @blur="handleTimeBlur('start')"
+                />
+                <span class="text-xs text-muted font-medium">—</span>
+                <input
+                  :value="slotEnd"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="5"
+                  placeholder="10:00"
+                  aria-label="Jam selesai (format 24 jam)"
+                  class="rounded-[6px] border border-line bg-app px-2.5 py-1 text-xs text-ink font-medium font-mono text-center focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-[72px]"
+                  @input="handleTimeInput('end', $event)"
+                  @blur="handleTimeBlur('end')"
+                />
+                <button
+                  v-if="slotStart || slotEnd"
+                  type="button"
+                  title="Hapus slot waktu"
+                  class="flex size-6 items-center justify-center rounded-[4px] border border-line bg-app text-muted hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer dark:hover:bg-red-950/40 dark:hover:border-red-900/60"
+                  @click="clearTimeSlot"
+                >
+                  <X class="size-3" />
+                </button>
+              </div>
+            </div>
+            <p v-if="isTimeSlotInvalid" class="mt-1 text-[11px] text-red-500 text-right">
+              Gunakan format 24 jam HH:mm (00:00 – 23:59)
+            </p>
+          </template>
+        </ReportPreview>
 
         <!-- Format Rules Callout -->
-        <div class="rounded-[8px] border border-line bg-panel p-4 text-xs text-ink-secondary space-y-1.5">
+        <div class="glass-card rounded-[10px] p-4 text-xs text-ink-secondary space-y-1.5">
           <div class="flex items-center gap-1.5 font-semibold text-ink">
             <AlertCircle class="size-4 text-primary" />
             <span>Ketentuan Format Laporan:</span>
@@ -313,7 +370,7 @@ async function copyFromHistory(report: DailyReport) {
 
       <!-- Works on Selected Date (5 cols on lg) -->
       <div class="lg:col-span-5 space-y-4">
-        <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs space-y-3">
+        <div class="glass-card rounded-[10px] p-4 space-y-3">
           <div class="flex items-center justify-between pb-2.5 border-b border-line">
             <div>
               <h2 class="text-xs font-semibold uppercase tracking-wider text-ink">
@@ -378,7 +435,7 @@ async function copyFromHistory(report: DailyReport) {
         </div>
 
         <!-- Saved Reports History Section -->
-        <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs space-y-3">
+        <div class="glass-card rounded-[10px] p-4 space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-line">
             <div class="flex items-center gap-2">
               <History class="size-4 text-muted" />

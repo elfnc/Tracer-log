@@ -52,34 +52,34 @@ Komponen, spacing, warna, typography, dan interaction pattern harus konsisten di
 
 ## **2. Color System**
 
-Palette Reference: [Colorhunt #071B2B #167D8D #B9E4E8 #EEEEEE](https://colorhunt.co/palette/071b2b167d8db9e4e8eeeeee)
+Palette Reference: Standard SaaS (Slate Neutral + Blue Primary) with Glassmorphism Cards
 
 Primary
-#167D8D
+#2563EB (Light) / #3B82F6 (Dark)
 
 Primary Hover
-#11626F
+#1D4ED8 (Light) / #60A5FA (Dark)
 
 Accent / Soft Highlight
-#B9E4E8
+#EFF6FF (Light) / #1E3A8A (Dark)
 
 App Background (Light)
-#EEEEEE
+#F8FAFC
 
-Surface (Light)
-#FFFFFF
+Surface / Glass Card (Light)
+#FFFFFF / rgba(255, 255, 255, 0.72) with backdrop-filter: blur(12px)
 
 Border (Light)
-#DCE5E8
+#E2E8F0
 
 Text Primary (Light)
-#071B2B
+#0F172A
 
 Text Secondary (Light)
-#3D5A70
+#475569
 
 Text Muted (Light)
-#6B889C
+#64748B
 
 ### **Status Colors**
 
@@ -94,16 +94,17 @@ Status badge gunakan soft background dengan teks yang cukup kontras. Jangan guna
 
 ### **Dark Mode**
 
-| Token            | Dark      |
-| ---------------- | --------- |
-| Background       | `#071B2B` |
-| Surface          | `#0D253A` |
-| Surface Elevated | `#14334C` |
-| Border           | `#1B3F60` |
-| Text Primary     | `#EEEEEE` |
-| Text Secondary   | `#B9E4E8` |
-| Primary          | `#167D8D` |
-| Accent           | `#B9E4E8` |
+| Token            | Dark                        |
+| ---------------- | --------------------------- |
+| Background       | `#090D16`                   |
+| Surface (Solid)  | `#111827`                   |
+| Glass Card       | `rgba(17, 24, 39, 0.65)`    |
+| Surface Elevated | `#1E293B`                   |
+| Border           | `#1E293B`                   |
+| Text Primary     | `#F8FAFC`                   |
+| Text Secondary   | `#CBD5E1`                   |
+| Primary          | `#3B82F6`                   |
+| Accent           | `#1E3A8A`                   |
 
 ## **3. Typography**
 

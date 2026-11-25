@@ -195,7 +195,7 @@ function formatTimeDisplay(isoStr?: string) {
     </div>
 
     <!-- Filter & Toolbar -->
-    <div class="rounded-[10px] border border-line bg-panel p-4 shadow-2xs space-y-3.5">
+    <div class="glass-card rounded-[10px] p-4 space-y-3.5">
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-12">
         <!-- Search Input (5 cols on lg) -->
         <div class="relative lg:col-span-5">
@@ -283,7 +283,7 @@ function formatTimeDisplay(isoStr?: string) {
     </div>
 
     <!-- History Works List -->
-    <div class="rounded-[10px] border border-line bg-panel shadow-xs overflow-hidden">
+    <div class="glass-card rounded-[10px] overflow-hidden">
       <!-- Empty State -->
       <div
         v-if="filteredWorks.length === 0"

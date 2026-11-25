@@ -80,7 +80,7 @@ function formatDisplayDate(dateStr: string) {
 
     <!-- Stats Cards Grid -->
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-      <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
+      <div class="glass-card rounded-[10px] p-4">
         <div class="flex items-center justify-between text-muted">
           <span class="text-xs font-medium text-ink-secondary">Total Hari Ini</span>
           <Layers class="size-4" />
@@ -90,7 +90,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
+      <div class="glass-card rounded-[10px] p-4">
         <div class="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
           <span class="text-xs font-medium text-ink-secondary">Selesai</span>
           <CheckCircle2 class="size-4" />
@@ -100,7 +100,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
+      <div class="glass-card rounded-[10px] p-4">
         <div class="flex items-center justify-between text-amber-600 dark:text-amber-400">
           <span class="text-xs font-medium text-ink-secondary">Dalam Proses</span>
           <Clock3 class="size-4" />
@@ -110,7 +110,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="rounded-[8px] border border-line bg-panel p-4 shadow-xs">
+      <div class="glass-card rounded-[10px] p-4">
         <div class="flex items-center justify-between text-rose-600 dark:text-rose-400">
           <span class="text-xs font-medium text-ink-secondary">Revisi</span>
           <AlertCircle class="size-4" />
@@ -124,7 +124,7 @@ function formatDisplayDate(dateStr: string) {
     <!-- Recent Work & Daily Report Quick Card -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <!-- Recent Work List (2 Cols) -->
-      <div class="rounded-[8px] border border-line bg-panel p-5 shadow-xs lg:col-span-2">
+      <div class="glass-card rounded-[10px] p-5 lg:col-span-2">
         <div class="flex items-center justify-between pb-3 border-b border-line">
           <div>
             <h2 class="text-sm font-semibold text-ink">Pekerjaan Terbaru</h2>
@@ -187,7 +187,7 @@ function formatDisplayDate(dateStr: string) {
       </div>
 
       <!-- Daily Report Quick Card (1 Col) -->
-      <div class="flex flex-col justify-between rounded-[8px] border border-line bg-panel p-5 shadow-xs">
+      <div class="glass-card flex flex-col justify-between rounded-[10px] p-5">
         <div class="space-y-3">
           <div class="flex size-9 items-center justify-center rounded-[6px] bg-primary-light text-primary">
             <FileText class="size-5" />

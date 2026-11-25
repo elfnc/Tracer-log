@@ -71,7 +71,7 @@ function onDrop(e: DragEvent) {
 
 <template>
   <div
-    class="flex flex-col min-w-[280px] max-w-[340px] flex-1 rounded-[10px] border border-line bg-panel/70 shadow-2xs transition-all duration-150 border-t-4"
+    class="glass-card flex flex-col min-w-[280px] max-w-[340px] flex-1 rounded-[10px] transition-all duration-150 border-t-4"
     :class="[
       columnTheme[status].border,
       isDragOver ? 'ring-2 ring-primary bg-primary-light/20 border-primary' : '',

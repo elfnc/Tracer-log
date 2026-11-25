@@ -45,7 +45,7 @@ const nav = [
 
 <template>
   <aside
-    class="flex shrink-0 flex-col border-r border-line bg-panel transition-all duration-200 select-none"
+    class="flex shrink-0 flex-col border-r border-(--glass-border) bg-(--glass-bg) backdrop-blur-md transition-all duration-200 select-none"
     :class="isCollapsed ? 'w-16' : 'w-60'"
   >
     <!-- Logo & Brand Header with Collapse Toggle -->

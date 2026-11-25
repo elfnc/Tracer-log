@@ -26,8 +26,8 @@ export function generateDailyReportContent(
 ): string {
   const header = formatReportDateHeader(reportDate)
   const nameLine = `Nama : ${profile.name}`
-  const divisionLine = `divisi : ${profile.division}`
-  const positionLine = `bagian : ${profile.position}`
+  const divisionLine = `Divisi : ${profile.division}`
+  const positionLine = `Bagian : ${profile.position}`
 
   // Sort works by createdAt ascending (waktu input awal)
   const sortedWorks = [...works].sort(

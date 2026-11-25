@@ -49,7 +49,7 @@ onUnmounted(() => {
         <div
           role="dialog"
           aria-modal="true"
-          class="relative w-full rounded-[12px] border border-line bg-panel shadow-xl transition-all duration-150"
+          class="glass-card relative w-full rounded-[12px] shadow-xl transition-all duration-150"
           :class="maxWidthClass"
         >
           <header class="flex items-center justify-between border-b border-line px-5 py-3.5">
@@ -70,7 +70,7 @@ onUnmounted(() => {
 
           <footer
             v-if="$slots.footer"
-            class="flex items-center justify-end gap-2 border-t border-line bg-panel px-5 py-3.5 rounded-b-[12px]"
+            class="flex items-center justify-end gap-2 border-t border-line/70 px-5 py-3.5 rounded-b-[12px]"
           >
             <slot name="footer" />
           </footer>

@@ -102,7 +102,7 @@ function formatDateLabel(dateStr: string) {
     </div>
 
     <!-- Filter & Search Toolbar -->
-    <div class="flex flex-col gap-3 rounded-[8px] border border-line bg-panel p-3.5 shadow-2xs sm:flex-row sm:items-center sm:justify-between">
+    <div class="glass-card flex flex-col gap-3 rounded-[10px] p-3.5 sm:flex-row sm:items-center sm:justify-between">
       <!-- Search Input -->
       <div class="relative flex-1 max-w-md">
         <Search class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted" />
