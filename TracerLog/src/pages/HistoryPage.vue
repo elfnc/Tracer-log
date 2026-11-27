@@ -58,9 +58,13 @@ const filteredWorks = computed(() => {
   const now = new Date()
 
   return workStore.works.filter((w) => {
-    // 1. Search Query filter (R# or Customer)
+    // 1. Search Query filter (No. Design or Customer)
     if (q) {
-      const matchR = w.rNumber.toLowerCase().includes(q) || `r# ${w.rNumber}`.toLowerCase().includes(q)
+      const prefix = (w.designType || 'R').toLowerCase()
+      const matchR =
+        w.rNumber.toLowerCase().includes(q) ||
+        `${prefix}-${w.rNumber}`.toLowerCase().includes(q) ||
+        `r#${w.rNumber}`.toLowerCase().includes(q)
       const matchCustomer = w.customer.toLowerCase().includes(q)
       if (!matchR && !matchCustomer) return false
     }
@@ -122,7 +126,7 @@ function openDetail(work: Work) {
 async function handleCreateWork(dto: CreateWorkDto) {
   await workStore.addWork(dto)
   isAddModalOpen.value = false
-  showToast(`Pekerjaan R#${dto.rNumber} berhasil ditambahkan.`)
+  showToast(`Pekerjaan ${dto.designType || 'R'}-${dto.rNumber} berhasil ditambahkan.`)
 }
 
 async function handleUpdateWork(id: string, data: Parameters<typeof workStore.updateWork>[1]) {
@@ -203,7 +207,7 @@ function formatTimeDisplay(isoStr?: string) {
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Cari nomor R# atau nama customer..."
+            placeholder="Cari no. design atau nama customer..."
             class="w-full rounded-[6px] border border-line bg-app pl-9 pr-8 py-2 text-xs text-ink placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
           />
           <button
@@ -329,7 +333,7 @@ function formatTimeDisplay(isoStr?: string) {
             >
               <!-- 1. No. Design -->
               <td class="py-3.5 px-4 font-semibold text-ink group-hover:text-primary transition-colors whitespace-nowrap">
-                R#{{ work.rNumber }}
+                {{ work.designType || 'R' }}-{{ work.rNumber }}
               </td>
 
               <!-- 2. Customer -->

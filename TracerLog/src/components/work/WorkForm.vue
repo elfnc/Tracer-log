@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { format } from 'date-fns'
-import type { Work, WorkStatus } from '@/types'
-import { WORK_STATUSES } from '@/types'
+import type { DesignType, Work, WorkStatus } from '@/types'
+import { DESIGN_TYPES, WORK_STATUSES } from '@/types'
 import type { CreateWorkDto } from '@/repositories/workRepository'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseSelect from '@/components/ui/BaseSelect.vue'
@@ -28,6 +28,7 @@ const emit = defineEmits<{
 }>()
 
 const form = reactive<{
+  designType: DesignType
   rNumber: string
   customer: string
   status: WorkStatus
@@ -35,6 +36,7 @@ const form = reactive<{
   description: string
   notes: string
 }>({
+  designType: 'R',
   rNumber: '',
   customer: '',
   status: 'PROGRESS',
@@ -51,6 +53,7 @@ const errors = reactive<{
 
 function initForm() {
   if (props.initialData) {
+    form.designType = props.initialData.designType || 'R'
     form.rNumber = props.initialData.rNumber || ''
     form.customer = props.initialData.customer || ''
     form.status = props.initialData.status || 'PROGRESS'
@@ -58,6 +61,7 @@ function initForm() {
     form.description = props.initialData.description || ''
     form.notes = props.initialData.notes || ''
   } else {
+    form.designType = 'R'
     form.rNumber = ''
     form.customer = ''
     form.status = 'PROGRESS'
@@ -79,7 +83,7 @@ function validate(): boolean {
   errors.workDate = undefined
 
   if (!form.rNumber.trim()) {
-    errors.rNumber = 'Nomor R# wajib diisi'
+    errors.rNumber = 'Nomor design wajib diisi'
     valid = false
   }
 
@@ -100,6 +104,7 @@ function handleSubmit() {
   if (!validate()) return
 
   emit('submit', {
+    designType: form.designType,
     rNumber: form.rNumber.trim(),
     customer: form.customer.trim(),
     status: form.status,
@@ -112,10 +117,32 @@ function handleSubmit() {
 
 <template>
   <form class="space-y-4" @submit.prevent="handleSubmit">
+    <!-- Radio Group Horizontal Kategori Design -->
+    <div class="space-y-1.5">
+      <label class="block text-xs font-medium text-ink-secondary">
+        Kategori Design <span class="text-red-500">*</span>
+      </label>
+      <div class="flex flex-wrap items-center gap-4 py-1">
+        <label
+          v-for="item in DESIGN_TYPES"
+          :key="item.value"
+          class="flex items-center gap-2 cursor-pointer text-xs font-medium text-ink"
+        >
+          <input
+            v-model="form.designType"
+            type="radio"
+            :value="item.value"
+            class="size-4 accent-primary cursor-pointer"
+          />
+          <span>{{ item.label }}</span>
+        </label>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <BaseInput
         v-model="form.rNumber"
-        label="Nomor Pekerjaan (R#)"
+        :label="`Nomor Design (${form.designType}-)`"
         placeholder="Contoh: 2610240"
         :error="errors.rNumber"
         required

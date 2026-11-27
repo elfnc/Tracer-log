@@ -35,12 +35,13 @@ export function generateDailyReportContent(
   )
 
   // Satu baris per work:
-  // Ada description → R# / Customer / description (status tidak ditampilkan)
-  // Tanpa description → R# / Customer / STATUS (format MVP)
+  // Ada description → PREFIX-Nomor / Customer / description (status tidak ditampilkan)
+  // Tanpa description → PREFIX-Nomor / Customer / STATUS (format standar)
   const workLines = sortedWorks.map((w) => {
+    const prefix = w.designType || 'R'
     const desc = (w.description ?? '').trim()
     const suffix = desc ? desc : w.status.toUpperCase()
-    return `R#${w.rNumber} / ${w.customer} / ${suffix}`
+    return `${prefix}-${w.rNumber} / ${w.customer} / ${suffix}`
   })
 
   const lines = [header]

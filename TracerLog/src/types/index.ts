@@ -1,3 +1,11 @@
+export type DesignType = 'R' | 'S' | 'D'
+
+export const DESIGN_TYPES: { label: string; value: DesignType; desc: string }[] = [
+  { label: 'Rotary', value: 'R', desc: 'Rotary Printing' },
+  { label: 'Sublim', value: 'S', desc: 'Sublimation' },
+  { label: 'Digital', value: 'D', desc: 'Digital Printing' },
+]
+
 export type WorkStatus = 'PROGRESS' | 'SELESAI' | 'REVISI PROGRESS' | 'REVISI SELESAI'
 
 export const WORK_STATUSES: WorkStatus[] = [
@@ -9,6 +17,7 @@ export const WORK_STATUSES: WorkStatus[] = [
 
 export interface Work {
   id: string
+  designType?: DesignType // 'R' | 'S' | 'D' (default 'R' untuk data lama)
   rNumber: string
   customer: string
   status: WorkStatus

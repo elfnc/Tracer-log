@@ -60,8 +60,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     'Divisi : digital printing',
     'Bagian : designer junior',
     '',
-    'R#2610240 / GIS / REVISI SELESAI',
-    'R#2611138 / GIS / PROGRESS',
+    'R-2610240 / GIS / REVISI SELESAI',
+    'R-2611138 / GIS / PROGRESS',
   ].join('\n')
 
   assert.strictEqual(report, expected)
@@ -105,8 +105,8 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
 
   const report = generateDailyReportContent('2026-11-13', mockWorks, mockProfile)
   const lines = report.split('\n')
-  assert.strictEqual(lines[5], 'R#1111111 / A / PROGRESS')
-  assert.strictEqual(lines[6], 'R#9999999 / B / SELESAI')
+  assert.strictEqual(lines[5], 'R-1111111 / A / PROGRESS')
+  assert.strictEqual(lines[6], 'R-9999999 / B / SELESAI')
   console.log('  ✅ Passed: Earlier work appears first.')
 }
 
@@ -163,6 +163,7 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
   const mockWorks: Work[] = [
     {
       id: '1',
+      designType: 'R',
       rNumber: '2611219',
       customer: 'KHARISMA',
       status: 'SELESAI',
@@ -174,14 +175,27 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     },
     {
       id: '2',
+      designType: 'S',
+      rNumber: '2611220',
+      customer: 'ANEKA',
+      status: 'SELESAI',
+      description: '',
+      notes: '',
+      workDate: '2026-11-25',
+      createdAt: '2026-11-25T09:00:00.000Z',
+      updatedAt: '2026-11-25T09:00:00.000Z',
+    },
+    {
+      id: '3',
+      designType: 'D',
       rNumber: '2611229',
       customer: 'GIS',
       status: 'REVISI SELESAI',
       description: '',
       notes: '',
       workDate: '2026-11-25',
-      createdAt: '2026-11-25T09:00:00.000Z',
-      updatedAt: '2026-11-25T09:00:00.000Z',
+      createdAt: '2026-11-25T10:00:00.000Z',
+      updatedAt: '2026-11-25T10:00:00.000Z',
     },
   ]
 
@@ -197,13 +211,69 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     'Divisi : Digital printing',
     'Bagian : Designer junior',
     '',
-    'R#2611219 / KHARISMA / Mengerjakan Produksi Rotary',
-    'R#2611229 / GIS / REVISI SELESAI',
+    'R-2611219 / KHARISMA / Mengerjakan Produksi Rotary',
+    'S-2611220 / ANEKA / SELESAI',
+    'D-2611229 / GIS / REVISI SELESAI',
   ].join('\n')
 
   assert.strictEqual(report, expected)
   assert.strictEqual(report.includes('SECRET_NOTE'), false)
-  console.log('  ✅ Passed: Time-slot & description replacement verified.')
+  console.log('  ✅ Passed: Time-slot, R-/S-/D- prefixes & description replacement verified.')
+}
+
+// 7. Test Kanban Unfinished Carry-over Logic
+{
+  console.log('\nTest 7: Unfinished works (PROGRESS / REVISI PROGRESS) remain visible on Kanban...')
+  const targetDate = '2026-11-27'
+  const works: Work[] = [
+    {
+      id: 'old-progress',
+      designType: 'R',
+      rNumber: '1001',
+      customer: 'A',
+      status: 'PROGRESS',
+      description: '',
+      notes: '',
+      workDate: '2026-11-26',
+      createdAt: '2026-11-26T08:00:00.000Z',
+      updatedAt: '2026-11-26T08:00:00.000Z',
+    },
+    {
+      id: 'old-revisi',
+      designType: 'S',
+      rNumber: '1002',
+      customer: 'B',
+      status: 'REVISI PROGRESS',
+      description: '',
+      notes: '',
+      workDate: '2026-11-25',
+      createdAt: '2026-11-25T08:00:00.000Z',
+      updatedAt: '2026-11-25T08:00:00.000Z',
+    },
+    {
+      id: 'old-done',
+      designType: 'D',
+      rNumber: '1003',
+      customer: 'C',
+      status: 'SELESAI',
+      description: '',
+      notes: '',
+      workDate: '2026-11-26',
+      createdAt: '2026-11-26T08:00:00.000Z',
+      updatedAt: '2026-11-26T08:00:00.000Z',
+    },
+  ]
+
+  const visibleOnKanban = works.filter((w) => {
+    const isCompleted = w.status === 'SELESAI' || w.status === 'REVISI SELESAI'
+    return isCompleted ? w.workDate === targetDate : w.workDate <= targetDate
+  })
+
+  assert.deepStrictEqual(
+    visibleOnKanban.map((w) => w.id),
+    ['old-progress', 'old-revisi'],
+  )
+  console.log('  ✅ Passed: Old unfinished works carried over, old completed works excluded.')
 }
 
 console.log('\n🎉 ALL CRITICAL VALIDATIONS AND UNIT TESTS PASSED!')

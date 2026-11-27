@@ -3,8 +3,8 @@ import { ref, watch, reactive } from 'vue'
 import { Trash2, AlertTriangle, Clock } from '@lucide/vue'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
-import type { Work, WorkStatus } from '@/types'
-import { WORK_STATUSES } from '@/types'
+import type { DesignType, Work, WorkStatus } from '@/types'
+import { DESIGN_TYPES, WORK_STATUSES } from '@/types'
 import BaseModal from '@/components/ui/BaseModal.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
@@ -18,11 +18,12 @@ const props = defineProps<{
 const open = defineModel<boolean>({ required: true })
 
 const emit = defineEmits<{
-  (e: 'update', id: string, data: { rNumber: string; customer: string; status: WorkStatus; workDate: string; description: string; notes: string }): void
+  (e: 'update', id: string, data: { designType: DesignType; rNumber: string; customer: string; status: WorkStatus; workDate: string; description: string; notes: string }): void
   (e: 'delete', id: string): void
 }>()
 
 const form = reactive<{
+  designType: DesignType
   rNumber: string
   customer: string
   status: WorkStatus
@@ -30,6 +31,7 @@ const form = reactive<{
   description: string
   notes: string
 }>({
+  designType: 'R',
   rNumber: '',
   customer: '',
   status: 'PROGRESS',
@@ -52,6 +54,7 @@ watch(
   (w) => {
     isConfirmingDelete.value = false
     if (w) {
+      form.designType = w.designType || 'R'
       form.rNumber = w.rNumber
       form.customer = w.customer
       form.status = w.status
@@ -70,7 +73,7 @@ function validate(): boolean {
   errors.workDate = undefined
 
   if (!form.rNumber.trim()) {
-    errors.rNumber = 'Nomor R# wajib diisi'
+    errors.rNumber = 'Nomor design wajib diisi'
     valid = false
   }
 
@@ -93,6 +96,7 @@ function handleSave() {
 
   isSaving.value = true
   emit('update', props.work.id, {
+    designType: form.designType,
     rNumber: form.rNumber.trim(),
     customer: form.customer.trim(),
     status: form.status,
@@ -122,7 +126,7 @@ function formatDate(isoString?: string) {
 </script>
 
 <template>
-  <BaseModal v-model="open" :title="`Detail Pekerjaan — R#${work?.rNumber ?? ''}`">
+  <BaseModal v-model="open" :title="`Detail Pekerjaan — ${work?.designType || 'R'}-${work?.rNumber ?? ''}`">
     <div v-if="work" class="space-y-4">
       <!-- Konfirmasi Hapus Dialog -->
       <div
@@ -133,7 +137,7 @@ function formatDate(isoString?: string) {
           <AlertTriangle class="size-4.5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
           <div class="flex-1 space-y-1.5">
             <p class="text-sm font-semibold text-red-900 dark:text-red-200">
-              Hapus pekerjaan R#{{ work.rNumber }}?
+              Hapus pekerjaan {{ work.designType || 'R' }}-{{ work.rNumber }}?
             </p>
             <p class="text-xs text-red-700/90 dark:text-red-300/80 leading-relaxed">
               Pekerjaan ini serta seluruh catatan internalnya akan dihapus permanen. Tindakan ini tidak dapat dibatalkan.
@@ -152,10 +156,32 @@ function formatDate(isoString?: string) {
 
       <!-- Detail & Edit Form -->
       <div v-if="!isConfirmingDelete" class="space-y-4">
+        <!-- Radio Group Horizontal Kategori Design -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-medium text-ink-secondary">
+            Kategori Design <span class="text-red-500">*</span>
+          </label>
+          <div class="flex flex-wrap items-center gap-4 py-1">
+            <label
+              v-for="item in DESIGN_TYPES"
+              :key="item.value"
+              class="flex items-center gap-2 cursor-pointer text-xs font-medium text-ink"
+            >
+              <input
+                v-model="form.designType"
+                type="radio"
+                :value="item.value"
+                class="size-4 accent-primary cursor-pointer"
+              />
+              <span>{{ item.label }}</span>
+            </label>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <BaseInput
             v-model="form.rNumber"
-            label="Nomor Pekerjaan (R#)"
+            :label="`Nomor Design (${form.designType}-)`"
             placeholder="Contoh: 2610240"
             :error="errors.rNumber"
             required
