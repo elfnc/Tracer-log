@@ -421,7 +421,7 @@ function formatBackupDate(isoStr: string): string {
           </div>
 
           <p class="text-xs text-muted leading-relaxed">
-            TracerLog beroperasi secara <strong>100% lokal</strong> di peramban Anda menggunakan IndexedDB. Tidak ada akun, kata sandi, maupun sinkronisasi cloud yang dibutuhkan.
+            DailyLog beroperasi secara <strong>100% lokal</strong> di peramban Anda menggunakan IndexedDB. Tidak ada akun, kata sandi, maupun sinkronisasi cloud yang dibutuhkan.
           </p>
 
           <div class="space-y-1.5 text-xs text-ink-secondary pt-1 border-t border-line/60">

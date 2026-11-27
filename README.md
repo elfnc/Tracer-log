@@ -1,6 +1,6 @@
-# TracerLog
+# DailyLog
 
-> **Personal Worklog & WhatsApp Daily Report Generator for Design Tracers**
+> **Log it. Report it.** — Personal Worklog & WhatsApp Daily Report Generator
 >
 > Modern, minimal, and local-first productivity tool to manage daily graphic design / tracing jobs and generate one-click copyable WhatsApp daily reports matching company standards.
 
@@ -8,7 +8,7 @@
 
 ## 📌 Project Overview
 
-**TracerLog** adalah aplikasi web personal yang dirancang khusus untuk mempermudah **Design Tracer** dalam mencatat, mengelola, dan memantau pekerjaan harian (berdasarkan nomor R# dan nama pelanggan), serta menghasilkan rekap laporan kerja harian secara otomatis dengan format yang langsung siap ditempel (*paste*) ke WhatsApp grup kantor.
+**DailyLog** adalah aplikasi web personal yang dirancang khusus untuk mempermudah **Design Tracer** dalam mencatat, mengelola, dan memantau pekerjaan harian (berdasarkan nomor design dan nama pelanggan), serta menghasilkan rekap laporan kerja harian secara otomatis dengan format yang langsung siap ditempel (*paste*) ke WhatsApp grup kantor.
 
 Aplikasi ini beroperasi dengan filosofi **Local-First** — tanpa backend, tanpa login akun, dan tanpa server database terpusat. Seluruh data tersimpan aman dan privat di dalam peramban (*browser*) komputer masing-masing.
 

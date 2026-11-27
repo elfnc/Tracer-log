@@ -286,8 +286,8 @@ function formatTimeDisplay(isoStr?: string) {
       </div>
     </div>
 
-    <!-- History Works List -->
-    <div class="glass-card rounded-[10px] overflow-hidden">
+    <!-- History Works List (Solid Clean Surface for Data Table) -->
+    <div class="rounded-[10px] border border-line bg-panel shadow-xs overflow-hidden">
       <!-- Empty State -->
       <div
         v-if="filteredWorks.length === 0"

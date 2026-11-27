@@ -45,7 +45,7 @@ const nav = [
 
 <template>
   <aside
-    class="flex shrink-0 flex-col border-r border-(--glass-border) bg-(--glass-bg) backdrop-blur-md transition-all duration-200 select-none"
+    class="flex shrink-0 flex-col border-r border-line bg-panel/95 backdrop-blur-sm transition-all duration-200 select-none"
     :class="isCollapsed ? 'w-16' : 'w-60'"
   >
     <!-- Logo & Brand Header with Collapse Toggle -->
@@ -58,8 +58,8 @@ const nav = [
           <ClipboardList class="size-4.5" />
         </div>
         <div v-if="!isCollapsed" class="flex flex-col min-w-0">
-          <span class="truncate text-base font-semibold leading-tight tracking-tight text-ink">TracerLog</span>
-          <span class="text-[11px] leading-none text-muted">Daily Worklog</span>
+          <span class="truncate text-base font-semibold leading-tight tracking-tight text-ink">DailyLog</span>
+          <span class="text-[11px] leading-none text-muted">Log it. Report it.</span>
         </div>
       </div>
 

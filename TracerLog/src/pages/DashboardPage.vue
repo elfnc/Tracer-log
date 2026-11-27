@@ -80,7 +80,7 @@ function formatDisplayDate(dateStr: string) {
 
     <!-- Stats Cards Grid -->
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-      <div class="glass-card rounded-[10px] p-4">
+      <div class="glass-card rounded-[10px] p-4 transition-all duration-200 hover:-translate-y-0.5">
         <div class="flex items-center justify-between text-muted">
           <span class="text-xs font-medium text-ink-secondary">Total Hari Ini</span>
           <Layers class="size-4" />
@@ -90,7 +90,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="glass-card rounded-[10px] p-4">
+      <div class="glass-card rounded-[10px] p-4 transition-all duration-200 hover:-translate-y-0.5">
         <div class="flex items-center justify-between text-emerald-600 dark:text-emerald-400">
           <span class="text-xs font-medium text-ink-secondary">Selesai</span>
           <CheckCircle2 class="size-4" />
@@ -100,7 +100,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="glass-card rounded-[10px] p-4">
+      <div class="glass-card rounded-[10px] p-4 transition-all duration-200 hover:-translate-y-0.5">
         <div class="flex items-center justify-between text-amber-600 dark:text-amber-400">
           <span class="text-xs font-medium text-ink-secondary">Dalam Proses</span>
           <Clock3 class="size-4" />
@@ -110,7 +110,7 @@ function formatDisplayDate(dateStr: string) {
         </p>
       </div>
 
-      <div class="glass-card rounded-[10px] p-4">
+      <div class="glass-card rounded-[10px] p-4 transition-all duration-200 hover:-translate-y-0.5">
         <div class="flex items-center justify-between text-rose-600 dark:text-rose-400">
           <span class="text-xs font-medium text-ink-secondary">Revisi</span>
           <AlertCircle class="size-4" />

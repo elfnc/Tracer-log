@@ -4,10 +4,14 @@ import type { WorkStatus } from '@/types'
 defineProps<{ status: WorkStatus }>()
 
 const styles: Record<WorkStatus, string> = {
-  PROGRESS: 'bg-[#FFF4DB] text-[#946200] dark:bg-amber-950/50 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/40',
-  SELESAI: 'bg-[#E5F4EA] text-[#286A43] dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/40',
-  'REVISI PROGRESS': 'bg-[#FCE8E6] text-[#B54736] dark:bg-rose-950/50 dark:text-rose-300 border border-rose-200/50 dark:border-rose-800/40',
-  'REVISI SELESAI': 'bg-[#E6F0FA] text-[#315F91] dark:bg-sky-950/50 dark:text-sky-300 border border-sky-200/50 dark:border-sky-800/40',
+  PROGRESS:
+    'bg-amber-500/12 text-amber-700 border border-amber-500/25 dark:bg-amber-400/15 dark:text-amber-300 dark:border-amber-400/25',
+  SELESAI:
+    'bg-emerald-500/12 text-emerald-700 border border-emerald-500/25 dark:bg-emerald-400/15 dark:text-emerald-300 dark:border-emerald-400/25',
+  'REVISI PROGRESS':
+    'bg-rose-500/12 text-rose-700 border border-rose-500/25 dark:bg-rose-400/15 dark:text-rose-300 dark:border-rose-400/25',
+  'REVISI SELESAI':
+    'bg-cyan-500/12 text-cyan-800 border border-cyan-500/25 dark:bg-cyan-400/15 dark:text-cyan-200 dark:border-cyan-400/25',
 }
 </script>
 

@@ -31,8 +31,8 @@ const columnTheme: Record<WorkStatus, { dot: string; border: string }> = {
     border: 'border-t-rose-500',
   },
   'REVISI SELESAI': {
-    dot: 'bg-sky-500',
-    border: 'border-t-sky-500',
+    dot: 'bg-cyan-500',
+    border: 'border-t-cyan-500',
   },
 }
 

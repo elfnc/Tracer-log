@@ -3,52 +3,52 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Standard SaaS Palette — Light theme (Slate + Blue) */
+/* Colorhunt Palette (#071B2B #167D8D #B9E4E8 #EEEEEE) + Hybrid Glass — Light theme */
 :root {
-  --app: #F8FAFC;
+  --app: #EEEEEE;
   --panel: #FFFFFF;
-  --panel-elevated: #F1F5F9;
-  --line: #E2E8F0;
-  --ink: #0F172A;
-  --ink-secondary: #475569;
-  --muted: #64748B;
+  --panel-elevated: #F8FAFB;
+  --line: #DCE5E8;
+  --ink: #071B2B;
+  --ink-secondary: #3D5A70;
+  --muted: #6B889C;
 
-  --primary: #2563EB;
-  --primary-hover: #1D4ED8;
-  --primary-light: rgba(37, 99, 235, 0.10);
-  --accent: #EFF6FF;
+  --primary: #167D8D;
+  --primary-hover: #11626F;
+  --primary-light: rgba(22, 125, 141, 0.12);
+  --accent: #B9E4E8;
 
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(226, 232, 240, 0.85);
-  --glass-highlight: rgba(255, 255, 255, 0.6);
-  --glass-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(220, 229, 232, 0.90);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 1px 3px 0 rgba(7, 27, 43, 0.05), 0 4px 16px -2px rgba(7, 27, 43, 0.05);
   --app-mesh:
-    radial-gradient(at 15% 10%, rgba(37, 99, 235, 0.07) 0px, transparent 50%),
-    radial-gradient(at 85% 90%, rgba(14, 165, 233, 0.06) 0px, transparent 50%);
+    radial-gradient(at 10% 0%, rgba(22, 125, 141, 0.07) 0px, transparent 48%),
+    radial-gradient(at 90% 100%, rgba(185, 228, 232, 0.28) 0px, transparent 48%);
 }
 
-/* Standard SaaS Palette — Dark theme (Deep Slate + Blue) */
+/* Colorhunt Palette (#071B2B #167D8D #B9E4E8 #EEEEEE) + Hybrid Glass — Dark theme */
 .dark {
-  --app: #090D16;
-  --panel: #111827;
-  --panel-elevated: #1E293B;
-  --line: #1E293B;
-  --ink: #F8FAFC;
-  --ink-secondary: #CBD5E1;
-  --muted: #94A3B8;
+  --app: #071B2B;
+  --panel: #0D253A;
+  --panel-elevated: #14334C;
+  --line: #1B3F60;
+  --ink: #EEEEEE;
+  --ink-secondary: #B9E4E8;
+  --muted: #789DB5;
 
-  --primary: #3B82F6;
-  --primary-hover: #60A5FA;
-  --primary-light: rgba(59, 130, 246, 0.18);
-  --accent: #1E3A8A;
+  --primary: #167D8D;
+  --primary-hover: #219BB0;
+  --primary-light: rgba(22, 125, 141, 0.28);
+  --accent: #B9E4E8;
 
-  --glass-bg: rgba(17, 24, 39, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-highlight: rgba(255, 255, 255, 0.06);
-  --glass-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.4);
+  --glass-bg: rgba(13, 37, 58, 0.78);
+  --glass-border: rgba(185, 228, 232, 0.12);
+  --glass-highlight: rgba(185, 228, 232, 0.06);
+  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.38);
   --app-mesh:
-    radial-gradient(at 15% 10%, rgba(59, 130, 246, 0.13) 0px, transparent 50%),
-    radial-gradient(at 85% 90%, rgba(56, 189, 248, 0.08) 0px, transparent 50%);
+    radial-gradient(at 10% 0%, rgba(22, 125, 141, 0.16) 0px, transparent 48%),
+    radial-gradient(at 90% 100%, rgba(185, 228, 232, 0.06) 0px, transparent 48%);
 }
 
 @theme inline {
@@ -71,8 +71,8 @@
 @utility glass-card {
   background-color: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
 }
 
@@ -81,4 +81,48 @@ body {
   background-image: var(--app-mesh);
   background-attachment: fixed;
   @apply font-sans text-ink antialiased selection:bg-primary/20;
+}
+
+/* Page Route Transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* Modal Pop Animation */
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-pop {
+  animation: modal-pop 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+
+  .animate-modal-pop {
+    animation: none;
+  }
 }
