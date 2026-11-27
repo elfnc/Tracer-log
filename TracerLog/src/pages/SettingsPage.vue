@@ -357,24 +357,24 @@ function formatBackupDate(isoStr: string): string {
             {{ restoreError }}
           </div>
 
-          <div class="flex flex-wrap items-center gap-2.5">
+          <div class="flex flex-wrap items-center gap-3">
             <BaseButton
-              size="sm"
+              size="md"
               variant="primary"
               :disabled="isExporting"
               @click="handleDownloadBackup"
             >
-              <Download class="size-3.5 mr-1.5" />
+              <Download class="size-4" />
               <span>{{ isExporting ? 'Menyiapkan...' : 'Download Backup (.json)' }}</span>
             </BaseButton>
 
             <BaseButton
-              size="sm"
+              size="md"
               variant="secondary"
               :disabled="isRestoring"
               @click="triggerRestoreFilePicker"
             >
-              <Upload class="size-3.5 mr-1.5" />
+              <Upload class="size-4" />
               <span>Restore dari (.json)</span>
             </BaseButton>
 

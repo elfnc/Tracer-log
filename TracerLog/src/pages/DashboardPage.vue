@@ -150,8 +150,9 @@ function formatDisplayDate(dateStr: string) {
           </div>
           <p class="text-sm font-medium text-ink">Belum ada pekerjaan yang dicatat</p>
           <p class="mt-0.5 text-xs text-muted">Mulai catat pekerjaan pertama Anda hari ini agar tertata rapi!</p>
-          <BaseButton size="sm" variant="primary" class="mt-3.5" @click="isAddModalOpen = true">
-            Tambah Pekerjaan Baru
+          <BaseButton variant="primary" class="mt-4" @click="isAddModalOpen = true">
+            <Plus class="size-4" />
+            <span>Tambah Pekerjaan Baru</span>
           </BaseButton>
         </div>
 
