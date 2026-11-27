@@ -1,9 +1,9 @@
 export type DesignType = 'R' | 'S' | 'D'
 
 export const DESIGN_TYPES: { label: string; value: DesignType; desc: string }[] = [
-  { label: 'R (Rotary)', value: 'R', desc: 'Rotary Printing' },
-  { label: 'S (Sublim)', value: 'S', desc: 'Sublimation' },
-  { label: 'D (Digital)', value: 'D', desc: 'Digital Printing' },
+  { label: 'Rotary', value: 'R', desc: 'Rotary Printing' },
+  { label: 'Sublim', value: 'S', desc: 'Sublimation' },
+  { label: 'Digital', value: 'D', desc: 'Digital Printing' },
 ]
 
 export type WorkStatus = 'PROGRESS' | 'SELESAI' | 'REVISI PROGRESS' | 'REVISI SELESAI'
