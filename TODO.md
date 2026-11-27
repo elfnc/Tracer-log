@@ -256,8 +256,8 @@
 ### Data
 - [ ] Export report to TXT
 - [ ] Export works to CSV
-- [ ] Backup data to JSON
-- [ ] Restore data from JSON
+- [x] Backup data to JSON
+- [x] Restore data from JSON
 
 ### Desktop
 - [ ] PWA installation

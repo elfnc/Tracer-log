@@ -9,16 +9,33 @@ import {
   Moon,
   Database,
   Info,
+  Download,
+  Upload,
+  HardDriveDownload,
+  AlertTriangle,
 } from '@lucide/vue'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { id as idLocale } from 'date-fns/locale'
 import { useProfileStore } from '@/stores/profileStore'
+import { useWorkStore } from '@/stores/workStore'
+import { useReportStore } from '@/stores/reportStore'
 import { DEFAULT_PROFILE } from '@/repositories/profileRepository'
 import { useTheme } from '@/composables/useTheme'
+import {
+  createBackupPayload,
+  downloadBackupJson,
+  parseAndValidateBackup,
+  restoreBackup,
+  type BackupPayload,
+  type RestoreMode,
+} from '@/utils/backupRestore'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
+import BaseModal from '@/components/ui/BaseModal.vue'
 
 const profileStore = useProfileStore()
+const workStore = useWorkStore()
+const reportStore = useReportStore()
 const { isDark, toggle } = useTheme()
 
 const form = reactive({
@@ -52,7 +69,11 @@ function initForm() {
 }
 
 onMounted(async () => {
-  await profileStore.fetchProfile()
+  await Promise.all([
+    profileStore.fetchProfile(),
+    workStore.fetchWorks(),
+    reportStore.fetchSavedReports(),
+  ])
   initForm()
 })
 
@@ -105,6 +126,86 @@ function handleResetDefault() {
   form.division = DEFAULT_PROFILE.division
   form.position = DEFAULT_PROFILE.position
   showToast('Form diisi dengan data default.')
+}
+
+// Backup & Restore JSON state
+const fileInputRef = ref<HTMLInputElement | null>(null)
+const isExporting = ref(false)
+const isRestoring = ref(false)
+const restoreError = ref<string | null>(null)
+const isRestoreModalOpen = ref(false)
+const pendingBackup = ref<BackupPayload | null>(null)
+const pendingFileName = ref('')
+const restoreMode = ref<RestoreMode>('merge')
+
+async function handleDownloadBackup() {
+  isExporting.value = true
+  restoreError.value = null
+  try {
+    const payload = await createBackupPayload()
+    const filename = downloadBackupJson(payload)
+    showToast(`Backup berhasil diunduh (${filename})`)
+  } finally {
+    isExporting.value = false
+  }
+}
+
+function triggerRestoreFilePicker() {
+  restoreError.value = null
+  fileInputRef.value?.click()
+}
+
+async function handleRestoreFileChange(event: Event) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  input.value = ''
+  if (!file) return
+
+  restoreError.value = null
+  try {
+    const text = await file.text()
+    const result = parseAndValidateBackup(text)
+    if (!result.valid || !result.payload) {
+      restoreError.value = result.error || 'File backup tidak valid.'
+      return
+    }
+    pendingBackup.value = result.payload
+    pendingFileName.value = file.name
+    restoreMode.value = 'merge'
+    isRestoreModalOpen.value = true
+  } catch {
+    restoreError.value = 'Gagal membaca file backup. Pastikan file dapat diakses.'
+  }
+}
+
+async function handleConfirmRestore() {
+  if (!pendingBackup.value) return
+  isRestoring.value = true
+  try {
+    await restoreBackup(pendingBackup.value, restoreMode.value)
+    await Promise.all([
+      workStore.fetchWorks(),
+      profileStore.fetchProfile(),
+      reportStore.fetchSavedReports(),
+    ])
+    initForm()
+    isRestoreModalOpen.value = false
+    pendingBackup.value = null
+    showToast('Data berhasil dipulihkan dari file backup!')
+  } catch {
+    restoreError.value = 'Terjadi kesalahan saat memulihkan data ke database lokal.'
+    isRestoreModalOpen.value = false
+  } finally {
+    isRestoring.value = false
+  }
+}
+
+function formatBackupDate(isoStr: string): string {
+  try {
+    return format(parseISO(isoStr), 'd MMM yyyy, HH:mm', { locale: idLocale })
+  } catch {
+    return isoStr
+  }
 }
 </script>
 
@@ -227,6 +328,65 @@ function handleResetDefault() {
             </BaseButton>
           </div>
         </div>
+
+        <!-- Backup & Restore Data JSON Card -->
+        <div class="glass-card rounded-[10px] p-5 space-y-4">
+          <div class="flex items-center gap-2.5 pb-3 border-b border-line">
+            <div class="flex size-8 items-center justify-center rounded-[6px] bg-primary-light text-primary">
+              <HardDriveDownload class="size-4.5" />
+            </div>
+            <div>
+              <h2 class="text-sm font-semibold text-ink">Backup &amp; Restore Data</h2>
+              <p class="text-xs text-muted">
+                Ekspor seluruh pekerjaan, profil, dan riwayat laporan ke file JSON atau pulihkan kembali
+              </p>
+            </div>
+          </div>
+
+          <div class="rounded-[8px] border border-line/80 bg-app/70 px-3.5 py-2.5 text-xs text-ink-secondary flex flex-wrap items-center justify-between gap-2">
+            <span>Data tersimpan saat ini:</span>
+            <span class="font-semibold text-ink">
+              {{ workStore.works.length }} pekerjaan • {{ reportStore.savedReports.length }} laporan tersimpan
+            </span>
+          </div>
+
+          <div
+            v-if="restoreError"
+            class="rounded-[8px] border border-red-300/60 bg-red-50/70 px-3.5 py-2.5 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
+          >
+            {{ restoreError }}
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <BaseButton
+              size="sm"
+              variant="primary"
+              :disabled="isExporting"
+              @click="handleDownloadBackup"
+            >
+              <Download class="size-3.5 mr-1.5" />
+              <span>{{ isExporting ? 'Menyiapkan...' : 'Download Backup (.json)' }}</span>
+            </BaseButton>
+
+            <BaseButton
+              size="sm"
+              variant="secondary"
+              :disabled="isRestoring"
+              @click="triggerRestoreFilePicker"
+            >
+              <Upload class="size-3.5 mr-1.5" />
+              <span>Restore dari (.json)</span>
+            </BaseButton>
+
+            <input
+              ref="fileInputRef"
+              type="file"
+              accept="application/json,.json"
+              class="hidden"
+              @change="handleRestoreFileChange"
+            />
+          </div>
+        </div>
       </div>
 
       <!-- Live Header Preview & Data Info (5 cols) -->
@@ -277,5 +437,93 @@ function handleResetDefault() {
         </div>
       </div>
     </div>
+
+    <!-- Modal Konfirmasi Restore Backup -->
+    <BaseModal v-model="isRestoreModalOpen" title="Konfirmasi Restore Data">
+      <div v-if="pendingBackup" class="space-y-4">
+        <div class="rounded-[8px] border border-line bg-app/70 p-3.5 text-xs space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-muted">Nama File:</span>
+            <span class="font-semibold text-ink truncate max-w-[240px]">{{ pendingFileName }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-muted">Waktu Backup:</span>
+            <span class="font-medium text-ink">{{ formatBackupDate(pendingBackup.exportedAt) }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-muted">Isi Data:</span>
+            <span class="font-semibold text-primary">
+              {{ pendingBackup.data.works.length }} pekerjaan • {{ pendingBackup.data.dailyReports.length }} laporan
+            </span>
+          </div>
+          <div v-if="pendingBackup.data.profiles[0]" class="flex items-center justify-between">
+            <span class="text-muted">Profil:</span>
+            <span class="font-medium text-ink">{{ pendingBackup.data.profiles[0].name }}</span>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-xs font-semibold text-ink">Pilih Mode Pemulihan:</p>
+
+          <label
+            class="flex items-start gap-2.5 rounded-[8px] border p-3 cursor-pointer transition-colors"
+            :class="restoreMode === 'merge' ? 'border-primary bg-primary-light/40' : 'border-line bg-panel'"
+          >
+            <input
+              v-model="restoreMode"
+              type="radio"
+              value="merge"
+              class="mt-0.5 size-4 accent-primary cursor-pointer"
+            />
+            <div class="text-xs">
+              <p class="font-semibold text-ink">Gabungkan Data (Merge) — Direkomendasikan</p>
+              <p class="text-muted mt-0.5">
+                Menambahkan data baru dan memperbarui data yang sama tanpa menghapus pekerjaan lain yang sudah ada.
+              </p>
+            </div>
+          </label>
+
+          <label
+            class="flex items-start gap-2.5 rounded-[8px] border p-3 cursor-pointer transition-colors"
+            :class="restoreMode === 'replace' ? 'border-red-500/70 bg-red-50/50 dark:bg-red-950/20' : 'border-line bg-panel'"
+          >
+            <input
+              v-model="restoreMode"
+              type="radio"
+              value="replace"
+              class="mt-0.5 size-4 accent-red-600 cursor-pointer"
+            />
+            <div class="text-xs">
+              <p class="font-semibold text-ink">Timpa Semua Data (Replace)</p>
+              <p class="text-muted mt-0.5">
+                Menghapus seluruh data saat ini dan menggantinya sepenuhnya dengan isi file backup.
+              </p>
+            </div>
+          </label>
+        </div>
+
+        <div
+          v-if="restoreMode === 'replace'"
+          class="flex items-start gap-2 rounded-[8px] border border-red-300/60 bg-red-50/70 p-3 text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
+        >
+          <AlertTriangle class="size-4 shrink-0 mt-0.5" />
+          <span>Data lama yang tidak ada di dalam file backup akan terhapus permanen.</span>
+        </div>
+      </div>
+
+      <template #footer>
+        <BaseButton type="button" variant="ghost" @click="isRestoreModalOpen = false">
+          Batal
+        </BaseButton>
+        <BaseButton
+          type="button"
+          :variant="restoreMode === 'replace' ? 'danger' : 'primary'"
+          :disabled="isRestoring"
+          @click="handleConfirmRestore"
+        >
+          {{ isRestoring ? 'Memulihkan...' : 'Pulihkan Data' }}
+        </BaseButton>
+      </template>
+    </BaseModal>
   </div>
 </template>

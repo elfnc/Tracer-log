@@ -1,5 +1,6 @@
 import assert from 'node:assert'
 import { formatReportDateHeader, generateDailyReportContent } from '../src/utils/reportGenerator.ts'
+import { parseAndValidateBackup } from '../src/utils/backupParser.ts'
 import type { Work, Profile } from '../src/types/index.ts'
 
 console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
@@ -274,6 +275,71 @@ console.log('🧪 Starting Critical Validation & Unit Tests for Day 6...\n')
     ['old-progress', 'old-revisi'],
   )
   console.log('  ✅ Passed: Old unfinished works carried over, old completed works excluded.')
+}
+
+// 8. Test Backup JSON Parser & Validation
+{
+  console.log('\nTest 8: Backup JSON parser & schema validation...')
+
+  const invalidJson = parseAndValidateBackup('{not-valid-json')
+  assert.strictEqual(invalidJson.valid, false)
+
+  const missingData = parseAndValidateBackup(JSON.stringify({ version: 1 }))
+  assert.strictEqual(missingData.valid, false)
+
+  const invalidWorkItem = parseAndValidateBackup(
+    JSON.stringify({
+      version: 1,
+      exportedAt: '2026-11-27T10:00:00.000Z',
+      app: 'TracerLog',
+      data: {
+        works: [{ id: 123 }],
+        profiles: [],
+        dailyReports: [],
+      },
+    }),
+  )
+  assert.strictEqual(invalidWorkItem.valid, false)
+
+  const validPayload = parseAndValidateBackup(
+    JSON.stringify({
+      version: 1,
+      exportedAt: '2026-11-27T10:00:00.000Z',
+      app: 'TracerLog',
+      data: {
+        works: [
+          {
+            id: 'w1',
+            rNumber: '2611219',
+            customer: 'KHARISMA',
+            status: 'SELESAI',
+            workDate: '2026-11-27',
+          },
+        ],
+        profiles: [
+          {
+            id: 'default',
+            name: 'Elfrian T. Setiawan',
+            division: 'Digital printing',
+            position: 'Designer junior',
+          },
+        ],
+        dailyReports: [
+          {
+            id: 'r1',
+            reportDate: '2026-11-27',
+            content: 'Rekap...',
+            createdAt: '2026-11-27T10:00:00.000Z',
+            updatedAt: '2026-11-27T10:00:00.000Z',
+          },
+        ],
+      },
+    }),
+  )
+  assert.strictEqual(validPayload.valid, true)
+  assert.strictEqual(validPayload.payload?.data.works.length, 1)
+  assert.strictEqual(validPayload.payload?.data.works[0]?.description, '')
+  console.log('  ✅ Passed: Valid & invalid backup JSON payloads handled properly.')
 }
 
 console.log('\n🎉 ALL CRITICAL VALIDATIONS AND UNIT TESTS PASSED!')
