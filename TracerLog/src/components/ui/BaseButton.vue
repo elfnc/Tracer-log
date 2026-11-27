@@ -25,7 +25,7 @@ const sizes = {
   <button
     :type="type"
     :disabled="disabled"
-    class="inline-flex items-center justify-center gap-2 rounded-[6px] font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+    class="inline-flex items-center justify-center gap-2 rounded-[6px] font-medium transition-all duration-150 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
     :class="[variants[variant], sizes[size]]"
   >
     <slot />

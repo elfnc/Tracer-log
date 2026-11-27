@@ -43,13 +43,13 @@ onUnmounted(() => {
     >
       <div v-if="open" class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <!-- Backdrop -->
-        <div class="fixed inset-0 bg-black/40 backdrop-blur-[2px]" @click="open = false" />
+        <div class="fixed inset-0 bg-black/40 backdrop-blur-[3px]" @click="open = false" />
 
         <!-- Modal Box -->
         <div
           role="dialog"
           aria-modal="true"
-          class="glass-card relative w-full rounded-[12px] shadow-xl transition-all duration-150"
+          class="glass-card animate-modal-pop relative w-full rounded-[12px] shadow-xl transition-all duration-200"
           :class="maxWidthClass"
         >
           <header class="flex items-center justify-between border-b border-line px-5 py-3.5">

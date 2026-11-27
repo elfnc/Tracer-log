@@ -38,7 +38,7 @@ function formatDisplayDate(dateStr: string) {
     role="button"
     tabindex="0"
     :draggable="draggable"
-    class="glass-card group flex flex-col gap-2 rounded-[8px] p-3 text-left transition-all duration-150 hover:border-primary/60 hover:shadow-md focus:border-primary focus:outline-none"
+    class="glass-card group flex flex-col gap-2 rounded-[8px] p-3 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md active:scale-[0.99] focus:border-primary focus:outline-none"
     :class="draggable ? 'cursor-grab active:cursor-grabbing select-none' : 'cursor-pointer'"
     @click="$emit('click', work)"
     @keydown.enter="$emit('click', work)"
