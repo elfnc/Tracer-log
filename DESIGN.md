@@ -52,59 +52,59 @@ Komponen, spacing, warna, typography, dan interaction pattern harus konsisten di
 
 ## **2. Color System**
 
-Palette Reference: Standard SaaS (Slate Neutral + Blue Primary) with Glassmorphism Cards
+Palette Reference: [Colorhunt #071B2B #167D8D #B9E4E8 #EEEEEE](https://colorhunt.co/palette/071b2b167d8db9e4e8eeeeee) + Hybrid Glass
 
 Primary
-#2563EB (Light) / #3B82F6 (Dark)
+#167D8D
 
 Primary Hover
-#1D4ED8 (Light) / #60A5FA (Dark)
+#11626F (Light) / #219BB0 (Dark)
 
 Accent / Soft Highlight
-#EFF6FF (Light) / #1E3A8A (Dark)
+#B9E4E8
 
 App Background (Light)
-#F8FAFC
+#EEEEEE
 
 Surface / Glass Card (Light)
-#FFFFFF / rgba(255, 255, 255, 0.72) with backdrop-filter: blur(12px)
+#FFFFFF / rgba(255, 255, 255, 0.80) with backdrop-filter: blur(10px)
 
 Border (Light)
-#E2E8F0
+#DCE5E8
 
 Text Primary (Light)
-#0F172A
+#071B2B
 
 Text Secondary (Light)
-#475569
+#3D5A70
 
 Text Muted (Light)
-#64748B
+#6B889C
 
-### **Status Colors**
+### **Status Colors (Tinted Badges)**
 
-| Status          | Background | Text      |
-| --------------- | ---------- | --------- |
-| PROGRESS        | `#FFF4DB`  | `#946200` |
-| SELESAI         | `#E5F4EA`  | `#286A43` |
-| REVISI PROGRESS | `#FCE8E6`  | `#B54736` |
-| REVISI SELESAI  | `#E6F0FA`  | `#315F91` |
+| Status          | Light Tint / Text                   | Dark Tint / Text                    |
+| --------------- | ----------------------------------- | ----------------------------------- |
+| PROGRESS        | `amber-500/12` / `amber-700`        | `amber-400/15` / `amber-300`        |
+| SELESAI         | `emerald-500/12` / `emerald-700`    | `emerald-400/15` / `emerald-300`    |
+| REVISI PROGRESS | `rose-500/12` / `rose-700`          | `rose-400/15` / `rose-300`          |
+| REVISI SELESAI  | `cyan-500/12` / `cyan-800`          | `cyan-400/15` / `cyan-200`          |
 
-Status badge gunakan soft background dengan teks yang cukup kontras. Jangan gunakan neon colors.
+Status badge menggunakan translucent tint (12%–15% opacity) dengan border tipis 25% opacity agar menyatu dengan gaya Hybrid Glass.
 
 ### **Dark Mode**
 
 | Token            | Dark                        |
 | ---------------- | --------------------------- |
-| Background       | `#090D16`                   |
-| Surface (Solid)  | `#111827`                   |
-| Glass Card       | `rgba(17, 24, 39, 0.65)`    |
-| Surface Elevated | `#1E293B`                   |
-| Border           | `#1E293B`                   |
-| Text Primary     | `#F8FAFC`                   |
-| Text Secondary   | `#CBD5E1`                   |
-| Primary          | `#3B82F6`                   |
-| Accent           | `#1E3A8A`                   |
+| Background       | `#071B2B`                   |
+| Surface (Solid)  | `#0D253A`                   |
+| Glass Card       | `rgba(13, 37, 58, 0.78)`    |
+| Surface Elevated | `#14334C`                   |
+| Border           | `#1B3F60`                   |
+| Text Primary     | `#EEEEEE`                   |
+| Text Secondary   | `#B9E4E8`                   |
+| Primary          | `#167D8D`                   |
+| Accent           | `#B9E4E8`                   |
 
 ## **3. Typography**
 

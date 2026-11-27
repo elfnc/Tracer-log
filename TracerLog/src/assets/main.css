@@ -3,52 +3,52 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Clean Minimal + Hybrid Glass — Light theme */
+/* Colorhunt Palette (#071B2B #167D8D #B9E4E8 #EEEEEE) + Hybrid Glass — Light theme */
 :root {
-  --app: #F8FAFC;
+  --app: #EEEEEE;
   --panel: #FFFFFF;
-  --panel-elevated: #F1F5F9;
-  --line: #E2E8F0;
-  --ink: #0F172A;
-  --ink-secondary: #475569;
-  --muted: #64748B;
+  --panel-elevated: #F8FAFB;
+  --line: #DCE5E8;
+  --ink: #071B2B;
+  --ink-secondary: #3D5A70;
+  --muted: #6B889C;
 
-  --primary: #2563EB;
-  --primary-hover: #1D4ED8;
-  --primary-light: rgba(37, 99, 235, 0.08);
-  --accent: #EFF6FF;
+  --primary: #167D8D;
+  --primary-hover: #11626F;
+  --primary-light: rgba(22, 125, 141, 0.12);
+  --accent: #B9E4E8;
 
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(226, 232, 240, 0.9);
-  --glass-highlight: rgba(255, 255, 255, 0.8);
-  --glass-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(220, 229, 232, 0.90);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 1px 3px 0 rgba(7, 27, 43, 0.05), 0 4px 16px -2px rgba(7, 27, 43, 0.05);
   --app-mesh:
-    radial-gradient(at 10% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 45%),
-    radial-gradient(at 90% 100%, rgba(14, 165, 233, 0.04) 0px, transparent 45%);
+    radial-gradient(at 10% 0%, rgba(22, 125, 141, 0.07) 0px, transparent 48%),
+    radial-gradient(at 90% 100%, rgba(185, 228, 232, 0.28) 0px, transparent 48%);
 }
 
-/* Clean Minimal + Hybrid Glass — Dark theme */
+/* Colorhunt Palette (#071B2B #167D8D #B9E4E8 #EEEEEE) + Hybrid Glass — Dark theme */
 .dark {
-  --app: #090D16;
-  --panel: #111827;
-  --panel-elevated: #1E293B;
-  --line: #1E293B;
-  --ink: #F8FAFC;
-  --ink-secondary: #CBD5E1;
-  --muted: #94A3B8;
+  --app: #071B2B;
+  --panel: #0D253A;
+  --panel-elevated: #14334C;
+  --line: #1B3F60;
+  --ink: #EEEEEE;
+  --ink-secondary: #B9E4E8;
+  --muted: #789DB5;
 
-  --primary: #3B82F6;
-  --primary-hover: #60A5FA;
-  --primary-light: rgba(59, 130, 246, 0.14);
-  --accent: #1E3A8A;
+  --primary: #167D8D;
+  --primary-hover: #219BB0;
+  --primary-light: rgba(22, 125, 141, 0.28);
+  --accent: #B9E4E8;
 
-  --glass-bg: rgba(17, 24, 39, 0.76);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-highlight: rgba(255, 255, 255, 0.04);
-  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  --glass-bg: rgba(13, 37, 58, 0.78);
+  --glass-border: rgba(185, 228, 232, 0.12);
+  --glass-highlight: rgba(185, 228, 232, 0.06);
+  --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.38);
   --app-mesh:
-    radial-gradient(at 10% 0%, rgba(59, 130, 246, 0.09) 0px, transparent 45%),
-    radial-gradient(at 90% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 45%);
+    radial-gradient(at 10% 0%, rgba(22, 125, 141, 0.16) 0px, transparent 48%),
+    radial-gradient(at 90% 100%, rgba(185, 228, 232, 0.06) 0px, transparent 48%);
 }
 
 @theme inline {
