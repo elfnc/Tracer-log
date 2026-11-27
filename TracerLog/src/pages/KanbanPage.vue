@@ -109,7 +109,7 @@ function formatDateLabel(dateStr: string) {
         <input
           :value="workStore.searchQuery"
           type="text"
-          placeholder="Cari nomor R# atau nama customer..."
+          placeholder="Cari no. design atau nama customer..."
           class="w-full rounded-[6px] border border-line bg-app pl-9 pr-8 py-1.5 text-xs text-ink placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
           @input="workStore.setSearchQuery(($event.target as HTMLInputElement).value)"
         />

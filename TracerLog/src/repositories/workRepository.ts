@@ -1,7 +1,8 @@
 import { db } from '@/db'
-import type { Work, WorkStatus } from '@/types'
+import type { DesignType, Work, WorkStatus } from '@/types'
 
 export interface CreateWorkDto {
+  designType?: DesignType
   rNumber: string
   customer: string
   status: WorkStatus
@@ -11,6 +12,7 @@ export interface CreateWorkDto {
 }
 
 export interface UpdateWorkDto {
+  designType?: DesignType
   rNumber?: string
   customer?: string
   status?: WorkStatus
@@ -34,10 +36,11 @@ export const workRepository = {
 
   async create(dto: CreateWorkDto): Promise<Work> {
     const now = new Date().toISOString()
-    const cleanRNumber = dto.rNumber.trim().replace(/^R#\s*/i, '')
+    const cleanRNumber = dto.rNumber.trim().replace(/^[RSD][-#]?\s*/i, '')
 
     const newWork: Work = {
       id: crypto.randomUUID(),
+      designType: dto.designType || 'R',
       rNumber: cleanRNumber,
       customer: dto.customer.trim(),
       status: dto.status,
@@ -57,10 +60,12 @@ export const workRepository = {
     if (!existing) return undefined
 
     const now = new Date().toISOString()
-    const cleanRNumber = dto.rNumber !== undefined ? dto.rNumber.trim().replace(/^R#\s*/i, '') : existing.rNumber
+    const cleanRNumber =
+      dto.rNumber !== undefined ? dto.rNumber.trim().replace(/^[RSD][-#]?\s*/i, '') : existing.rNumber
 
     const updatedWork: Work = {
       ...existing,
+      designType: dto.designType ?? existing.designType ?? 'R',
       rNumber: cleanRNumber,
       customer: dto.customer !== undefined ? dto.customer.trim() : existing.customer,
       status: dto.status ?? existing.status,
@@ -90,12 +95,14 @@ export const workRepository = {
     const items = await collection.toArray()
     if (!q) return items
 
-    return items.filter(
-      (item) =>
+    return items.filter((item) => {
+      const prefix = (item.designType || 'R').toLowerCase()
+      return (
         item.rNumber.toLowerCase().includes(q) ||
         item.customer.toLowerCase().includes(q) ||
-        `r#${item.rNumber}`.toLowerCase().includes(q) ||
-        `r# ${item.rNumber}`.toLowerCase().includes(q),
-    )
+        `${prefix}-${item.rNumber}`.toLowerCase().includes(q) ||
+        `r#${item.rNumber}`.toLowerCase().includes(q)
+      )
+    })
   },
 }

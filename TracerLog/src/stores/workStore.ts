@@ -25,16 +25,32 @@ export const useWorkStore = defineStore('work', () => {
 
   const filteredWorks = computed(() => {
     const q = searchQuery.value.trim().toLowerCase()
+    const targetDate = selectedDate.value
+
     return works.value.filter((w) => {
-      const matchDate = selectedDate.value ? w.workDate === selectedDate.value : true
-      if (!matchDate) return false
-      if (!q) return true
-      return (
-        w.rNumber.toLowerCase().includes(q) ||
-        w.customer.toLowerCase().includes(q) ||
-        `r#${w.rNumber}`.toLowerCase().includes(q) ||
-        `r# ${w.rNumber}`.toLowerCase().includes(q)
-      )
+      // 1. Filter pencarian No. Design atau Customer
+      if (q) {
+        const prefix = (w.designType || 'R').toLowerCase()
+        const matchSearch =
+          w.rNumber.toLowerCase().includes(q) ||
+          w.customer.toLowerCase().includes(q) ||
+          `${prefix}-${w.rNumber}`.toLowerCase().includes(q) ||
+          `r#${w.rNumber}`.toLowerCase().includes(q)
+        if (!matchSearch) return false
+      }
+
+      // 2. Filter Tanggal & Status untuk Kanban:
+      //    - SELESAI / REVISI SELESAI hanya tampil pada tanggal terpilih
+      //    - PROGRESS / REVISI PROGRESS tetap tampil jika workDate <= tanggal terpilih
+      if (targetDate) {
+        const isCompleted = w.status === 'SELESAI' || w.status === 'REVISI SELESAI'
+        if (isCompleted) {
+          return w.workDate === targetDate
+        }
+        return w.workDate <= targetDate
+      }
+
+      return true
     })
   })
 
